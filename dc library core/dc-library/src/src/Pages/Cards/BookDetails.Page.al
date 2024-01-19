@@ -4,14 +4,14 @@ page 50703 "Book Details"
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = "Library Table";
-    
+
     layout
     {
         area(Content)
         {
             group(GroupName)
             {
-                
+
                 field(Title; Rec.Title)
                 {
                     ToolTip = 'Specifies the value of the Title field.';
@@ -59,7 +59,7 @@ page 50703 "Book Details"
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
@@ -67,31 +67,35 @@ page 50703 "Book Details"
             action("Rent This Book")
             {
                 ApplicationArea = All;
-                
+
                 trigger OnAction()
                 var
-                BookRec: Record "Library Table";
-                OrderRec: Record "Book Orders Table";
-                CustomerRec: Record "Customer";
-                ReturnDate: Date;
+
+                    OrderRec: Record "Book Orders Table";
+                    CustomerRec: Record "Customer";
+                    ReturnDate: Date;
                 begin
-                    //OrderRec.CalculateReturnDate()
-                    OrderRec.AddBookToOrder(Rec.BookID, CustomerRec."No.",CustomerRec.Name,Rec.Title,ReturnDate);
-                    BookRec.RentedStatusOut(Rec.BookID);
+                    if Rec.Rented = Enum::"Book Status"::Available then
+                        OrderRec.AddBookToOrder(Rec.BookID, CustomerRec."No.", CustomerRec.Name, Rec.Title, ReturnDate)
+                    else
+                        Message('Book Is currently Out of Store, Please check back later.');
                 end;
             }
             action("Return This Book")
             {
                 ApplicationArea = All;
-                
+
                 trigger OnAction()
                 var
-                BookTitle: Record "Library Table";
+                    BookTitle: Record "Library Table";
                 begin
-                    BookTitle.RentedStatusAvailiable(Rec.BookID);
+                    if Rec.Rented = Enum::"Book Status"::"Out of Store" then
+                        BookTitle.RentedStatusAvailiable(Rec.BookID)
+                    else
+                        Message('Book Has already been Returned.');
                 end;
             }
         }
     }
-    
+
 }

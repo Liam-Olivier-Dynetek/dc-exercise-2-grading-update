@@ -1,8 +1,8 @@
 {
-  "id": "59feaa9c-a890-4d03-afb3-9c176689bb47",
-  "name": "dc grading update",
+  "id": "203068e3-8c4b-4e5a-88c6-e6dd49648485",
+  "name": "dc library grading update",
   "publisher": "Default Publisher",
-  "version": "23.2.20240118.1620",
+  "version": "1.0.0.0",
   "brief": "",
   "description": "",
   "privacyStatement": "",
@@ -10,29 +10,23 @@
   "help": "",
   "url": "",
   "logo": "",
-  "dependencies": [
-    {
-    "id":  "1bc8c036-616b-48ae-b736-42c4aa2c467f",
-    "name":  "dc-library",
-    "publisher":  "Default Publisher",
-    "version":  "23.2.20240119.1435"
-    }
-  ],
+  "dependencies": [],
   "screenshots": [],
   "platform": "1.0.0.0",
-  "application": "22.0.0.0",
+  "application": "21.0.0.0",
   "idRanges": [
     {
       "from": 50750,
       "to": 50800
     }
   ],
-  "features": [
-    "NoImplicitWith"
-  ],
   "resourceExposurePolicy": {
     "allowDebugging": true,
     "allowDownloadingSource": true,
     "includeSourceInSymbolFile": true
-  }
+  },
+  "runtime": "10.0",
+  "features": [
+    "NoImplicitWith"
+  ]
 }

@@ -34,7 +34,6 @@ page 50701 "Book Orders Page"
                 {
                     ToolTip = 'Due to be returned before';
                 }
-
             }
         }
         area(Factboxes)
@@ -62,5 +61,5 @@ page 50701 "Book Orders Page"
     }
 
     var
-    CustomerDetails: Record "Customer";
+    CustomerDetails: Record "Contact";
 }

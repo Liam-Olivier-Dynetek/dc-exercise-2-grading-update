@@ -79,10 +79,13 @@ page 50700 "Library List"
 
                 trigger OnAction();
                 var
-                NewOrder: Page "Book Orders Page";
-                
+                NewOrder: Record "Book Orders Table";
+                CustomerDetails: Record "Contact";
                 begin
-                    NewOrder.RunModal();
+                    if Rec.Rented = Enum::"Book Status"::Available then
+                    NewOrder.AddBookToOrder(Rec.BookID,CustomerDetails."No.",CustomerDetails.Name,Rec.Title,Today()+120)
+                    else
+                    Message('This Book is currently not Availiable to Rent.');
                 end;
             }
 

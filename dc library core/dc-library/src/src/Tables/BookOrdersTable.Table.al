@@ -15,19 +15,21 @@ table 50701 "Book Orders Table"
         {
             Caption = 'Customer ID';
             DataClassification = CustomerContent;
-            Editable = false;
+            TableRelation = Contact."No.";
+            Editable = True;
         }
         field(30;CustomerName; Text[50])
         {
             Caption = 'Customer Name';
             DataClassification = CustomerContent;
-            Editable = false;
+            TableRelation = Contact.Name;
+            Editable = True;
         }
         field(40;"Title"; Text[50])
         {
             Caption = 'Title';
             DataClassification = CustomerContent;
-            Editable = false;
+            Editable = True;
             TableRelation = "Library Table".Title;
 
         }
@@ -81,16 +83,19 @@ end;
 var
     OrderRec: Record "Book Orders Table";
     LibraryRec: Record "Library Table";
+    CustomerDetails: Record "Contact";
+
 begin
     if LibraryRec.Get(BookID) then
     begin
         OrderRec.Init();
-        OrderRec.CustomerID := CustomerID;
-        OrderRec.CustomerName := CustomerName;
+        OrderRec.CustomerID := CustomerDetails."No.";
+        OrderRec.CustomerName := CustomerDetails.Name;
         OrderRec.Title := BookTitle;
         OrderRec."Retrun Date" := ReturnDate;
         OrderRec.Insert();
         Message('The book %1 has been added to the order.', BookID);
+        LibraryRec.RentedStatusOut(LibraryRec.BookID)
     end
     else
         Message('The book %1 does not exist.', BookID);

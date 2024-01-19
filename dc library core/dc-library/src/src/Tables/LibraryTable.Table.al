@@ -103,9 +103,6 @@ table 50700 "Library Table"
         }
     }
 
-    
-        
-
     trigger OnInsert()
     begin
 
@@ -201,6 +198,4 @@ begin
     else
         Message('The book with ID %1 does not exist.', BookID);
 end;
-
-//procedure to take current time and add sleced amount of dayes based on users choice
 }
