@@ -16,15 +16,15 @@ table 50750 DamagedBooks
         }
         field(30; "Book Title"; Text[100])
         {
-            TableRelation = "Library Table".Title;
+
         }
         field(40; "Book Grading"; Enum BookQualityRating)
         {
-            TableRelation = "Library Table"."Quality Rating";
+
         }
         field(50; "Book Status"; Enum "Book Status")
         {
-            TableRelation = "Library Table".Rented;
+
         }
     }
     

@@ -37,16 +37,15 @@ page 50752 "Grade Book"
     {
         area(Processing)
         {
-            action("Update Quality Rating")
+            action(SaveChanges)
             {
                 ApplicationArea = All;
-                Caption = 'Update Quality Rating';
-                
-                trigger OnAction()
-                var
-                Grade: Codeunit GradeBooks;
+                Image = Save;
+                Promoted = true;
+                PromotedCategory = Process;
+                trigger OnAction();
                 begin
-                    Grade.UpdateQualityRating(Rec,Rec."Quality Rating");
+                    Rec.Modify();
                 end;
             }
         }
