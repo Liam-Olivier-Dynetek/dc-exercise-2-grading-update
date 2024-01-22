@@ -59,7 +59,6 @@ page 50703 "Book Details"
             }
         }
     }
-
     actions
     {
         area(Processing)
@@ -69,33 +68,24 @@ page 50703 "Book Details"
                 ApplicationArea = All;
 
                 trigger OnAction()
-                var
-
-                    OrderRec: Record "Book Orders Table";
-                    CustomerRec: Record "Customer";
-                    ReturnDate: Date;
                 begin
-                    if Rec.Rented = Enum::"Book Status"::Available then
-                        OrderRec.AddBookToOrder(Rec.BookID, CustomerRec."No.", CustomerRec.Name, Rec.Title, ReturnDate)
-                    else
-                        Message('Book Is currently Out of Store, Please check back later.');
+                    Page.RunModal(Page::CreateOrder,Rec)
                 end;
             }
-            action("Return This Book")
-            {
-                ApplicationArea = All;
+            // action("Return This Book")
+            // {
+            //     ApplicationArea = All;
 
-                trigger OnAction()
-                var
-                    BookTitle: Record "Library Table";
-                begin
-                    if Rec.Rented = Enum::"Book Status"::"Out of Store" then
-                        BookTitle.RentedStatusAvailiable(Rec.BookID)
-                    else
-                        Message('Book Has already been Returned.');
-                end;
-            }
+            //     trigger OnAction()
+            //     var
+            //         BookTitle: Record "Library Table";
+            //     begin
+            //         if Rec.Rented = Enum::"Book Status"::"Out of Store" then
+            //             BookTitle.RentedStatusAvailiable(Rec.BookID)
+            //         else
+            //             Message('Book Has already been Returned.');
+            //     end;
+            // }
         }
     }
-
 }

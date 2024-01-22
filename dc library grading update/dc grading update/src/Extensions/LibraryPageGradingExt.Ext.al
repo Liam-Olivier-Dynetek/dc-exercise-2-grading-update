@@ -1,4 +1,4 @@
-pageextension 50750 "LibraryPageExt" extends "Library List"
+pageextension 50750 "Library Page Ext" extends "Library List"
 {
 
     layout
@@ -29,9 +29,9 @@ pageextension 50750 "LibraryPageExt" extends "Library List"
 
                 trigger OnAction();
                 var
-                ViewOrders: Page "Book Orders Page";
                 begin
-                    ViewOrders.RunModal();
+                    Page.RunModal(Page::"Book Orders Page",Rec);
+                    Rec."Previous Rating" := Rec."Quality Rating";
                 end;
             }
 
@@ -46,7 +46,7 @@ pageextension 50750 "LibraryPageExt" extends "Library List"
 
                 trigger OnAction();
                 begin
-                    Page.RunModal(Page::"Grade Book",Rec)
+                    Page.RunModal(Page::"Grade Book",Rec);
                 end;
             }
         }
@@ -54,6 +54,6 @@ pageextension 50750 "LibraryPageExt" extends "Library List"
 
     trigger OnOpenPage();
     begin
-        Codeunit.Run(Codeunit::BookGradingCheck);
+        Codeunit.Run(Codeunit::"Book Grading Check");
     end;
 }

@@ -1,4 +1,4 @@
-enum 50750 BookQualityRating
+enum 50750 "Book Quality Rating"
 {
     Extensible = true;
     value(0; "A") 

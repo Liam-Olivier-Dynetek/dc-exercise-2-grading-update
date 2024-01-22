@@ -1,47 +1,41 @@
-/*
-CodeUnit to Loop through all the books in Library Table
-and if they have a rating of D set their Status to 'Out of Store' 
-and add them to the DamagedBooks Table.
-
-This Loop is run after every OnRun or on modify
-*/
-codeunit 50750 BookGradingCheck
+codeunit 50750 "Book Grading Check"
 {
     trigger OnRun()
     var
-        CheckRating: Codeunit BookGradingCheck;
         RecordRatings: Record "Library Table";
     begin
-        CheckRating.CheckBookQuality(RecordRatings);
+        CheckBookQuality(RecordRatings);
     end;
 
     procedure CheckBookQuality(BookRec: Record "Library Table")
     var
-        DamagedBookRec: Record DamagedBooks;
+        DamagedBookRec: Record "Damaged Books";
+        UpdateStatus: Codeunit "Update Rent Status";
     begin
-        BookRec.SetRange("Quality Rating", Enum::"BookQualityRating"::"D");
+        BookRec.SetRange("Quality Rating", Enum::"Book Quality Rating"::"D");
         if BookRec.FindSet() then begin
             repeat
                 DamagedBookRec.SetRange(DamagedBookRec."Book Title", BookRec.Title);
                 if DamagedBookRec.IsEmpty() then begin
-                    RemoveFromRenting(BookRec);
+                    ChangeStatusToOut(BookRec);
                     AddToDamagedBooks(BookRec);
                 end;
             until BookRec.Next() = 0;
         end;
     end;
 
-    procedure RemoveFromRenting(Book: Record "Library Table")
+    local procedure ChangeStatusToOut(Book: Record "Library Table")
     var
-        UpdateStatus: Codeunit UpdateRentStatus;
+        UpdateStatus: Codeunit "Update Rent Status";
+        Action: Text;
     begin
-        //Change Book Status to 'Out of Store'
-        UpdateStatus.ForceBookStatusToOut(Book);
+        Action := 'RentBook';
+        UpdateStatus.HandleBook(Book,Action);
     end;
 
-    procedure AddToDamagedBooks(Book: Record "Library Table")
+    local procedure AddToDamagedBooks(Book: Record "Library Table")
     var
-        DamagedBook: Record "DamagedBooks";
+        DamagedBook: Record "Damaged Books";
     begin
         DamagedBook.Init();
         DamagedBook.BookID := Book.BookID;

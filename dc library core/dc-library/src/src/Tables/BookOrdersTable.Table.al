@@ -22,7 +22,6 @@ table 50701 "Book Orders Table"
         {
             Caption = 'Customer Name';
             DataClassification = CustomerContent;
-            TableRelation = Contact.Name;
             Editable = True;
         }
         field(40;"Title"; Text[50])
@@ -31,7 +30,6 @@ table 50701 "Book Orders Table"
             DataClassification = CustomerContent;
             Editable = True;
             TableRelation = "Library Table".Title;
-
         }
         field(50;"Retrun Date"; Date)
         {
@@ -72,9 +70,32 @@ table 50701 "Book Orders Table"
     
 
 //Procedure to calculate Due date for return.
-procedure CalculateReturnDate(Period: Enum "Return Period") ReturnDate: Date
+procedure CalculateReturnDate(Period: Enum "Return Period") ReturnDate: Date;
+var
+    PeriodInt: Integer;
 begin
-    ReturnDate := Today() + Period;
+    PeriodInt := GetEnumInteger(Period);
+    ReturnDate := Today() + PeriodInt;
+end;
+
+
+//Case to convert enum to Int to avoid future runtime errors.
+procedure GetEnumInteger(ReturnPeriod: Enum "Return Period") ReturnValue: Integer;
+begin
+    case ReturnPeriod of
+        Enum::"Return Period"::"One Day":
+            ReturnValue := 1;
+        Enum::"Return Period"::"Two Days":
+            ReturnValue := 2;
+        Enum::"Return Period"::"Three Days":
+            ReturnValue := 3;
+        Enum::"Return Period"::"Four Days":
+            ReturnValue := 4;
+        Enum::"Return Period"::"Five Days":
+            ReturnValue := 5;
+        else
+            Error('Invalid Return Period');
+    end;
 end;
 
 
@@ -83,14 +104,12 @@ end;
 var
     OrderRec: Record "Book Orders Table";
     LibraryRec: Record "Library Table";
-    CustomerDetails: Record "Contact";
-
 begin
     if LibraryRec.Get(BookID) then
     begin
         OrderRec.Init();
-        OrderRec.CustomerID := CustomerDetails."No.";
-        OrderRec.CustomerName := CustomerDetails.Name;
+        LibraryRec.CustomerID := CustomerID;
+        LibraryRec."Customer Name" := CustomerName;
         OrderRec.Title := BookTitle;
         OrderRec."Retrun Date" := ReturnDate;
         OrderRec.Insert();
