@@ -19,7 +19,7 @@ table 50750 "Damaged Books"
         {
             Caption = 'Title Of the Book.';
         }
-        field(40; "Book Grading"; Enum "Book Quality Rating")
+        field(40; "Book Grading"; Enum "Quality Grading")
         {
             Caption = 'Current State of Quality of book';
         }
@@ -35,29 +35,5 @@ table 50750 "Damaged Books"
             Clustered = true;
         }
     }
-    
-    fieldgroups
-    {
-    }
-    
-    trigger OnInsert()
-    begin
-        
-    end;
-    
-    trigger OnModify()
-    begin
-        
-    end;
-    
-    trigger OnDelete()
-    begin
-        
-    end;
-    
-    trigger OnRename()
-    begin
-        
-    end;
     
 }

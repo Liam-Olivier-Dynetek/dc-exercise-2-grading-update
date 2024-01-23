@@ -11,19 +11,19 @@ begin
 end;
     
 //Update the Quality Rating
-local procedure UpdateQualityRating(var Rec: Record "Library Table")
+local procedure UpdateQualityRating(var "Library Table": Record "Library Table")// Rec to library Table
 begin
-    Rec."Quality Rating" := Rec."Quality Rating";
-    Rec.Modify();
+    "Library Table"."Quality Rating" := "Library Table"."Quality Rating";
+    "Library Table".Modify();
     Message('Book Graded.');
 end;
 
 //Update The comment
 local procedure UpdateComment(var LibraryRecord: Record "Library Table");
 var
-    BookRec: Record "Library Table";
+    Book: Record "Library Table";
 begin
-    if BookRec.Get(LibraryRecord.Title) then begin
+    if Book.Get(LibraryRecord.BookID) then begin
         LibraryRecord.Comment := LibraryRecord.Comment;
         LibraryRecord.Modify();
     end else

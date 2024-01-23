@@ -1,55 +1,51 @@
 codeunit 50751 "Update Rent Status"
 {
     trigger OnRun()
-    var
-    UpdateBookStatus: Codeunit "Update Rent Status";
-    Rec: Record "Library Table";
-    Action: Text;
     begin
-        UpdateBookStatus.HandleBook(Rec,Action);
+        
     end;
 
 
-procedure HandleBook(var Rec: Record "Library Table"; Action: Text)
+procedure HandleBook(var "Library Table": Record "Library Table"; Action: Text)
 begin
     case Action of
         'DamagedBook':
             begin
-                DamagedBook(Rec);
+                DamagedBook("Library Table");
             end;
         'ReturnBook':
             begin
-                ReturnBook(Rec);
+                ReturnBook("Library Table");
             end;
         'RentBook':
             begin
-                RentBook(Rec);
+                RentBook("Library Table");
             end;
         else
             Error('Invalid action: %1', Action);
     end;
 end;
-    local procedure DamagedBook(var Rec: Record "Library Table")
+    local procedure DamagedBook(var "Library Table": Record "Library Table")
     begin
-        if Rec."Rented" = Enum::"Book Status"::Available then begin
-            Rec."Rented" := Enum::"Book Status"::Damaged;
-            Rec.Modify();
+        if "Library Table"."Rented" = Enum::"Book Status"::Available then begin
+            "Library Table"."Rented" := Enum::"Book Status"::Damaged;
+            "Library Table".Modify();
         end;
     end;
 
-   local procedure ReturnBook(var Rec: Record "Library Table")
+   local procedure ReturnBook(var "Library Table": Record "Library Table")
     begin
-        if Rec."Rented" = Enum::"Book Status"::"Out of Store" then begin
-            Rec."Rented" := Enum::"Book Status"::Available;
-            Rec.Modify();
+        if "Library Table"."Rented" = Enum::"Book Status"::"Out of Store" then begin
+            "Library Table"."Rented" := Enum::"Book Status"::Available;
+            "Library Table".Modify();
         end;
     end;
 
-local procedure RentBook(var Rec: Record "Library Table")
+local procedure RentBook(var "Library Table": Record "Library Table")
     begin
-        if Rec."Rented" = Enum::"Book Status"::"Available" then begin
-            Rec."Rented" := Enum::"Book Status"::"Out of Store";
-            Rec.Modify();
+        if "Library Table"."Rented" = Enum::"Book Status"::"Available" then begin
+            "Library Table"."Rented" := Enum::"Book Status"::"Out of Store";
+            "Library Table".Modify();
         end;
     end;
 }

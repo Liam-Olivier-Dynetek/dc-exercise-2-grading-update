@@ -12,10 +12,10 @@
   "logo": "",
   "dependencies": [
     {
-      "id":  "1bc8c036-616b-48ae-b736-42c4aa2c467f",
-      "name":  "dc-library",
-      "publisher":  "Default Publisher",
-      "version":  "23.2.20240122.1437"
+    "id":  "1bc8c036-616b-48ae-b736-42c4aa2c467f",
+    "name":  "dc-library",
+    "publisher":  "Default Publisher",
+    "version":  "23.2.20240123.0955"
     }
   ],
   "screenshots": [],

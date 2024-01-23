@@ -47,27 +47,6 @@ table 50701 "Book Orders Table"
             Clustered = true;
         }
     }
-    
-    trigger OnInsert()
-    begin
-        
-    end;
-    
-    trigger OnModify()
-    begin
-        
-    end;
-    
-    trigger OnDelete()
-    begin
-        
-    end;
-    
-    trigger OnRename()
-    begin
-        
-    end;
-    
 
 //Procedure to calculate Due date for return.
 procedure CalculateReturnDate(Period: Enum "Return Period") ReturnDate: Date;

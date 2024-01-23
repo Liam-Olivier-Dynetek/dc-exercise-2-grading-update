@@ -26,10 +26,10 @@ page 50701 "Book Orders Page"
                 {
                     ToolTip = 'Due to be returned before';
                 }
-                field(CustomerID; Rec.CustomerID)
-                {
-                    ToolTip = 'Specifies the value of the Customer ID field.';
-                }
+                // field(CustomerID; Rec.CustomerID)
+                // {
+                //     ToolTip = 'Specifies the value of the Customer ID field.';
+                // }
             }
         }
         area(Factboxes)

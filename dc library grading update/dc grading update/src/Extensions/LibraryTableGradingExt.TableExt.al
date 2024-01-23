@@ -1,9 +1,9 @@
 // Table Extension
-tableextension 50750 "Book Quality Rating Ext" extends "Library Table"
+tableextension 50750 "Library Table Grading Ext" extends "Library Table"
 {
     fields
     {
-        field(50100; "Quality Rating"; Enum "Book Quality Rating")
+        field(50100; "Quality Rating"; Enum "Quality Grading")
         {
             Caption = 'Quality Rating';
         }
@@ -12,13 +12,18 @@ tableextension 50750 "Book Quality Rating Ext" extends "Library Table"
             Caption = 'UserID';
             TableRelation = Contact."No.";
         }
-        field(50102; "Previous Rating"; Enum "Book Quality Rating")
+        field(50102; "Previous Rating"; Enum "Quality Grading")
         {
             Caption = 'Previous Grading';
         }
         field(50103; Comment; Text[150])
         {   
             Caption = 'Comment';
+        }
+        field(50104;"Due Date"; Date)
+        {
+            Caption  = 'Due Date';
+            TableRelation = "Book Orders Table"."Retrun Date";
         }
     }
 }

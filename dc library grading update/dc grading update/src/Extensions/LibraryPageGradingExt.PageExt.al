@@ -1,4 +1,4 @@
-pageextension 50750 "Library Page Ext" extends "Library List"
+pageextension 50750 "Library Page Grading Ext" extends "Library List"
 {
 
     layout
@@ -9,6 +9,21 @@ pageextension 50750 "Library Page Ext" extends "Library List"
             {
                 ApplicationArea = All;
                 ToolTip = 'Displays how damaged a book is.';
+            }
+        }
+        addafter(Rented)
+        {
+            field(Comment; Rec.Comment)
+            {
+                ApplicationArea = All;
+                Caption = 'Comments on current Rating';
+                ToolTip = 'Comment on the current rating of the book.';
+            }
+            field("Due Date"; Rec."Due Date")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Book Has to Be returned before this date.';
+                Caption = 'Due Date';
             }
         }
     }
@@ -29,8 +44,9 @@ pageextension 50750 "Library Page Ext" extends "Library List"
 
                 trigger OnAction();
                 var
+                ViewOrders: Page "Book Orders Page";
                 begin
-                    Page.RunModal(Page::"Book Orders Page",Rec);
+                    ViewOrders.RunModal();
                     Rec."Previous Rating" := Rec."Quality Rating";
                 end;
             }
@@ -53,7 +69,10 @@ pageextension 50750 "Library Page Ext" extends "Library List"
     }
 
     trigger OnOpenPage();
+    var
+    DateCheck: Codeunit "Date Checks";
     begin
-        Codeunit.Run(Codeunit::"Book Grading Check");
+        Codeunit.Run(Codeunit::"Book Grading Check",Rec);
+        DateCheck.CheckDates();
     end;
 }

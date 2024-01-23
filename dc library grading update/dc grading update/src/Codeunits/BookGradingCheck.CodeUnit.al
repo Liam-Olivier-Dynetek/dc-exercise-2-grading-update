@@ -1,36 +1,39 @@
 codeunit 50750 "Book Grading Check"
 {
+    TableNo = "Library Table";
+
     trigger OnRun()
     var
         RecordRatings: Record "Library Table";
     begin
         CheckBookQuality(RecordRatings);
+        CheckBookStatusAndUpdateRating();
     end;
 
-    procedure CheckBookQuality(BookRec: Record "Library Table")
+    procedure CheckBookQuality(Book: Record "Library Table")
     var
-        DamagedBookRec: Record "Damaged Books";
+        
+        DamagedBook: Record "Damaged Books";
         UpdateStatus: Codeunit "Update Rent Status";
     begin
-        BookRec.SetRange("Quality Rating", Enum::"Book Quality Rating"::"D");
-        if BookRec.FindSet() then begin
+        Book.SetRange("Quality Rating", Enum::"Quality Grading"::"D");
+        if Book.FindSet() then begin
             repeat
-                DamagedBookRec.SetRange(DamagedBookRec."Book Title", BookRec.Title);
-                if DamagedBookRec.IsEmpty() then begin
-                    ChangeStatusToOut(BookRec);
-                    AddToDamagedBooks(BookRec);
+                DamagedBook.SetRange(DamagedBook."Book Title", Book.Title);
+                if DamagedBook.IsEmpty() then begin
+                    ChangeStatusToOut(Book);
+                    AddToDamagedBooks(Book);
                 end;
-            until BookRec.Next() = 0;
+            until Book.Next() = 0;
         end;
     end;
 
     local procedure ChangeStatusToOut(Book: Record "Library Table")
     var
         UpdateStatus: Codeunit "Update Rent Status";
-        Action: Text;
     begin
-        Action := 'RentBook';
-        UpdateStatus.HandleBook(Book,Action);
+        
+        UpdateStatus.HandleBook(Book,'RentBook');
     end;
 
     local procedure AddToDamagedBooks(Book: Record "Library Table")
@@ -44,5 +47,24 @@ codeunit 50750 "Book Grading Check"
         DamagedBook."Book Status" := Book.Rented;
         DamagedBook.Insert();
     end;
+
+
+local procedure CheckBookStatusAndUpdateRating()
+var
+    Book: Record "Library Table";
+begin
+    if Book.FindSet() then begin
+        repeat
+            if (Book.Rented <> Book.Rented::"Out of Store") and 
+               ((Book."Quality Rating" = Enum::"Quality Grading"::"A") or 
+                (Book."Quality Rating" = Enum::"Quality Grading"::"B") or 
+                (Book."Quality Rating" = Enum::"Quality Grading"::"C")) then begin
+                Book.Rented := Book.Rented::Available;
+                Book.Modify();
+            end;
+        until Book.Next() = 0;
+    end;
+end;
+
 }
 

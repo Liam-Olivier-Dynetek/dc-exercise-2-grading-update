@@ -2,14 +2,14 @@ page 50752 "Grade Book"
 {
     PageType = Card;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = None;
     SourceTable = "Library Table";
     
     layout
     {
         area(Content)
         {
-            group(GroupName)
+            group(General)
             {
                 
                 field(Title; Rec.Title)
@@ -29,7 +29,6 @@ page 50752 "Grade Book"
                     ApplicationArea = All;
                     ToolTip = 'Displays how damaged a book is.';
                 }
-                //Need Area for Adding a comment
             }
         }
     }
@@ -44,9 +43,9 @@ page 50752 "Grade Book"
                 Image = Save;
                 Promoted = true;
                 PromotedCategory = Process;
+                Caption = 'Save Changes';
                 trigger OnAction();
                 begin
-                    Rec.Modify();
                     Codeunit.Run(Codeunit::"Book Grading Check");
                     Message('Book Updated');
                 end;

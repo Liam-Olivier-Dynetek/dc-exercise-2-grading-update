@@ -2,14 +2,14 @@ page 50751 "Damaged Books"
 {
     PageType = List;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = Lists;
     SourceTable = "Damaged Books";
     
     layout
     {
         area(Content)
         {
-            repeater(GroupName)
+            repeater(General)
             {
                 field(DamagedBookID; Rec.DamagedBookID)
                 {
@@ -45,21 +45,4 @@ page 50751 "Damaged Books"
             }
         }
     }
-    
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-                ApplicationArea = All;
-                
-                trigger OnAction()
-                begin
-                    
-                end;
-            }
-        }
-    }
-    
 }

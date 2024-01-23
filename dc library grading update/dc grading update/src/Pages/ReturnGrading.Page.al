@@ -2,24 +2,19 @@ page 50750 "Return Grading Page"
 {
     PageType = Card;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = None;
     SourceTable = "Library Table";
     
     layout
     {
         area(Content)
         {
-            group(GroupName)
+            group("Last Report")
             {
                 field(Title; Rec.Title)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Title of the Book';
-                }
-                field(CustomerID; Rec.CustomerID)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the Customer ID field.';
                 }
                 field(Rented; Rec.Rented)
                 {
@@ -32,7 +27,14 @@ page 50750 "Return Grading Page"
                     ToolTip = 'Specifies the value of the Previous Grading field.';
                     Editable = false;
                 }
-                
+            }
+            group("New Report")
+            {
+                field(CustomerID; Rec.CustomerID)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Customer ID field.';
+                }
                 field("Quality Rating"; Rec."Quality Rating")
                 {
                     ApplicationArea = All;
@@ -42,12 +44,19 @@ page 50750 "Return Grading Page"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Comment field.';
+                    ShowMandatory = true;
                     trigger OnValidate()
                     begin
                         if Rec.Comment = '' then
-                            Message('This field has to be Filled.');
+                            Error('This field has to be Filled.');
                     end;
                 }
+                field("Due Date"; Rec."Due Date")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Book Has to Be returned before this date.';
+                }
+                
             }
         }
     }
@@ -65,7 +74,9 @@ page 50750 "Return Grading Page"
                 trigger OnAction()
                 var
                 ConfirmReturn: Codeunit "Grade Books";
+                UpdateStatus: Codeunit "Update Rent Status";
                 begin
+                    UpdateStatus.HandleBook(Rec,'ReturnBook');
                     ConfirmReturn.ConfirmReturn(Rec);
                 end;
             }
