@@ -8,6 +8,7 @@ codeunit 50750 "Book Grading Check"
     begin
         CheckBookQuality(RecordRatings);
         CheckBookStatusAndUpdateRating();
+        ArchiveLowQualityBooks();
     end;
 
     procedure CheckBookQuality(Book: Record "Library Table")
@@ -60,6 +61,20 @@ begin
                 (Book."Quality Rating" = Enum::"Quality Grading"::"B") or 
                 (Book."Quality Rating" = Enum::"Quality Grading"::"C")) then begin
                 Book.Rented := Book.Rented::Available;
+                Book.Modify();
+            end;
+        until Book.Next() = 0;
+    end;
+end;
+
+local procedure ArchiveLowQualityBooks()
+var
+    Book: Record "Library Table";
+begin
+    if Book.FindSet() then begin
+        repeat
+            if Book."Quality Rating" = Enum::"Quality Grading"::"F" then begin
+                Book.Rented := Book.Rented::Archived;
                 Book.Modify();
             end;
         until Book.Next() = 0;
