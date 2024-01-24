@@ -40,7 +40,6 @@ page 50751 "Damaged Books"
                     ApplicationArea = All;
                     ToolTip = 'Specifies if the Book Is Availiable or Not';
                     Caption = 'Shows if current book is Availiable or not.';
-
                 }
             }
         }

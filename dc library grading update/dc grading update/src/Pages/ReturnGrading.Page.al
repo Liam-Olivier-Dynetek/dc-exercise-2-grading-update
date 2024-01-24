@@ -53,10 +53,10 @@ page 50750 "Return Grading Page"
                 }
                 field("Due Date"; Rec."Due Date")
                 {
+                    Editable = false;
                     ApplicationArea = All;
                     ToolTip = 'Book Has to Be returned before this date.';
                 }
-                
             }
         }
     }
@@ -78,6 +78,7 @@ page 50750 "Return Grading Page"
                 begin
                     UpdateStatus.HandleBook(Rec,'ReturnBook');
                     ConfirmReturn.ConfirmReturn(Rec);
+                    Message('Book returned.');
                 end;
             }
         }

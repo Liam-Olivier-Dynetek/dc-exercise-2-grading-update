@@ -27,8 +27,6 @@ begin
     end;
 end;
 
-
-
 local procedure CheckOverdueBooks()
 var
     Library: Record "Library Table";
@@ -47,6 +45,8 @@ begin
         until Library.Next() = 0;
     end;
 end;
+
+
 
 }
 
