@@ -4,14 +4,13 @@ table 50700 "Library Table"
 
     fields
     {
-        field(10; BookID; Integer)
+        field(10; BookID; Code[20])
         {
             Caption = 'BookID';
             DataClassification = CustomerContent;
-            AutoIncrement = true;
             Editable = false;
         }
-        field(20; OrderID; Integer)
+        field(20; OrderID; Code[20])
         {
             Caption = 'OrderID';
             DataClassification = CustomerContent;
@@ -85,7 +84,6 @@ table 50700 "Library Table"
             DataClassification = CustomerContent;
             Editable = true;
         }
-
         field(130; Sequel; Text[50])
         {
             Caption = 'Sequel';
@@ -103,7 +101,6 @@ table 50700 "Library Table"
         }
         field(160; "Customer Name"; Text[50])
         {
-            //TableRelation = Contact.Name;
             Caption = 'Customer Name';
         }
     }
@@ -115,11 +112,6 @@ table 50700 "Library Table"
             Clustered = true;
         }
     }
-
-    trigger OnInsert()
-    begin
-
-    end;
 
     trigger OnModify()
     begin
@@ -141,12 +133,11 @@ table 50700 "Library Table"
     var
         NewRecord: Record "Library Table";
     begin
-        NewRecord.Init(); // Initialize a new row
+        NewRecord.Init();
         if NewRecord.IsEmpty() then
             Message('The selected book is empty')
         else
-            //Populate the new record with the existing fields
-            NewRecord.Author := SelectedRecord.Author;
+        NewRecord.Author := SelectedRecord.Author;
         NewRecord.Series := SelectedRecord.Series;
         NewRecord.Prequel := SelectedRecord.Prequel;
         NewRecord.Genre := SelectedRecord.Genre;
@@ -155,7 +146,7 @@ table 50700 "Library Table"
     end;
 
 
-    procedure RentedStatusOut(BookID: Integer)
+    procedure RentedStatusOut(BookID: Code[20])
     var
         LibraryRec: Record "Library Table";
     begin
@@ -188,5 +179,4 @@ table 50700 "Library Table"
         else
             Message('The book with ID %1 does not exist.', BookID);
     end;
-
 }

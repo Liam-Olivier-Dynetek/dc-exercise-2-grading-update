@@ -79,7 +79,7 @@ end;
 
 
 //Create the Order Procedure
-    procedure AddBookToOrder(BookID: Integer; CustomerID: Code[20]; CustomerName: Text[100]; BookTitle: Text[100]; ReturnDate: Date)
+    procedure AddBookToOrder(BookID: Code[20]; CustomerID: Code[20]; CustomerName: Text[100]; BookTitle: Text[100]; ReturnDate: Date)
 var
     OrderRec: Record "Book Orders Table";
     LibraryRec: Record "Library Table";

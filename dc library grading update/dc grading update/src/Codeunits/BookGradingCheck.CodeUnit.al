@@ -6,14 +6,14 @@ codeunit 50750 "Book Grading Check"
     var
         RecordRatings: Record "Library Table";
     begin
-        CheckBookQuality(RecordRatings);
+        CheckBookQuality();
         CheckBookStatusAndUpdateRating();
         ArchiveLowQualityBooks();
     end;
 
-    procedure CheckBookQuality(Book: Record "Library Table")
+    procedure CheckBookQuality()
     var
-        
+        Book: Record "Library Table";
         DamagedBook: Record "Damaged Books";
         UpdateStatus: Codeunit "Update Rent Status";
     begin
@@ -34,7 +34,7 @@ codeunit 50750 "Book Grading Check"
         UpdateStatus: Codeunit "Update Rent Status";
     begin
         
-        UpdateStatus.HandleBook(Book,'RentBook');
+        UpdateStatus.HandleBook(Book,'DamagedBook');
     end;
 
     local procedure AddToDamagedBooks(Book: Record "Library Table")

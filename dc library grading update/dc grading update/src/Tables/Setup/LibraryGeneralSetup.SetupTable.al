@@ -1,6 +1,5 @@
 table 50752 "Library General Setup"
 {
-    DataPerCompany = true;
     fields
     {
         field(1; "Primary Key"; Code[10])
@@ -25,4 +24,10 @@ table 50752 "Library General Setup"
             Clustered = true;
         }
     }
+
+    trigger OnInsert()
+    begin
+        if Rec.IsEmpty() then
+            Rec.Insert();
+    end;
 }

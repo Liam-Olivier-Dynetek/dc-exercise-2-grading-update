@@ -42,10 +42,6 @@ page 50700 "Library List"
                 }
             }
         }
-        area(Factboxes)
-        {
-
-        }
     }
 
     actions

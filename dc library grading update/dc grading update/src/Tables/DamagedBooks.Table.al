@@ -2,14 +2,14 @@
 table 50750 "Damaged Books"
 {
     DataClassification = ToBeClassified;
-    
+
     fields
     {
-        field(10;DamagedBookID; Code[20])
+        field(10; DamagedBookID; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(20; BookID; Integer)
+        field(20; BookID; Code[20])
         {
             TableRelation = "Library Table".BookID;
             Caption = 'The ID of the book';
@@ -26,7 +26,6 @@ table 50750 "Damaged Books"
         {
         }
     }
-    
     keys
     {
         key(PK; DamagedBookID)
@@ -34,17 +33,19 @@ table 50750 "Damaged Books"
             Clustered = true;
         }
     }
-    
-//     trigger OnInsert()
-// var
-//     LibraryGeneralSetup: Record "Library General Setup";
-// begin
-//     if "DamagedBookID" = '' then
-//     begin
-//         LibraryGeneralSetup.Get();
-//         LibraryGeneralSetup.TestField("Book Nos.");
-//         NoSeriesMgt.InitSeries(LibraryGeneralSetup."Book Nos.", xRec.DamagedBookID, 0D, "BookID", DamagedBookID);
-//     end;
-// end;
 
+
+    trigger OnInsert()
+    var
+        LibrarySetup: Record "Library General Setup";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+    begin
+        if "BookID" = '' then begin
+            LibrarySetup.Get();
+            LibrarySetup.TestField("Damaged Books Nos.");
+            NoSeriesMgt.InitSeries(LibrarySetup."Damaged Books Nos.", '', 0D, DamagedBookID, LibrarySetup."Damaged Books Nos.");
+            if DamagedBookID = '' then
+                Error('Failed to generate a unique DamagedBookID.');
+        end;
+    end;
 }

@@ -4,7 +4,6 @@ pageextension 50751 "Book Details UserId Ext" extends "Book Details"
     {
         addafter("PublicationDate")
         {
-            
             field(UserID; Rec.UserID)
             {
                 ApplicationArea = All;
@@ -27,7 +26,6 @@ pageextension 50751 "Book Details UserId Ext" extends "Book Details"
                 ApplicationArea = All;
                 ToolTip = 'Specifies the value of the Comment field.';
             }
-            
         }
     }
     

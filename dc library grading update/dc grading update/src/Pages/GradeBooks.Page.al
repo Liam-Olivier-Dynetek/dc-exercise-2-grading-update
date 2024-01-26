@@ -29,6 +29,11 @@ page 50752 "Grade Book"
                     ApplicationArea = All;
                     ToolTip = 'Displays how damaged a book is.';
                 }
+                field(Comment; Rec.Comment)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Comment field.';
+                }
             }
         }
     }

@@ -26,6 +26,17 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
             TableRelation = "Book Orders Table"."Retrun Date";
         }
     }
+
+    trigger OnInsert()
+    var
+        LibrarySetup: Record "Library General Setup";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+    begin
+        if "BookID" = '' then
+        begin
+            LibrarySetup.Get();
+            LibrarySetup.TestField("Library Nos.");
+            NoSeriesMgt.InitSeries(LibrarySetup."Library Nos.", xRec.BookID, 0D, "BookID", LibrarySetup."Library Nos.");
+        end;
+    end;
 }
-
-
