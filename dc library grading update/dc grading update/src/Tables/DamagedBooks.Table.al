@@ -5,10 +5,9 @@ table 50750 "Damaged Books"
     
     fields
     {
-        field(10;DamagedBookID; Integer)
+        field(10;DamagedBookID; Code[20])
         {
             DataClassification = ToBeClassified;
-            AutoIncrement = true;
         }
         field(20; BookID; Integer)
         {
@@ -36,4 +35,16 @@ table 50750 "Damaged Books"
         }
     }
     
+//     trigger OnInsert()
+// var
+//     LibraryGeneralSetup: Record "Library General Setup";
+// begin
+//     if "DamagedBookID" = '' then
+//     begin
+//         LibraryGeneralSetup.Get();
+//         LibraryGeneralSetup.TestField("Book Nos.");
+//         NoSeriesMgt.InitSeries(LibraryGeneralSetup."Book Nos.", xRec.DamagedBookID, 0D, "BookID", DamagedBookID);
+//     end;
+// end;
+
 }
