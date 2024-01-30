@@ -9,12 +9,12 @@ table 50752 "Library General Setup"
         field(2; "Library Nos."; Code[20])
         {
             Caption = 'Library Nos.';
-            TableRelation = "No. Series";
+            TableRelation = "No. Series".Code;
         }
         field(3; "Damaged Books Nos."; Code[20])
         {
             Caption = 'Damaged Books Nos.';
-            TableRelation = "No. Series";
+            TableRelation = "No. Series".Code;
         }
     }
     keys
@@ -25,9 +25,23 @@ table 50752 "Library General Setup"
         }
     }
 
-    trigger OnInsert()
+    procedure GetRecordOnce()
     begin
-        if Rec.IsEmpty() then
-            Rec.Insert();
+        if RecordHasBeenRead then
+            exit;
+        Get();
+        RecordHasBeenRead := true;
     end;
+
+    procedure InsertIfNotExists()
+    begin
+        Reset();
+        if not Get() then begin
+            Init();
+            Insert(true);
+        end;
+    end;
+
+    var
+        RecordHasBeenRead: Boolean;
 }

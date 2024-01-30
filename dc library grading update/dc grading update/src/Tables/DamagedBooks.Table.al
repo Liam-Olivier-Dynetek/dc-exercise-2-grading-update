@@ -30,22 +30,19 @@ table 50750 "Damaged Books"
     {
         key(PK; DamagedBookID)
         {
-            Clustered = true;
+            
         }
     }
-
 
     trigger OnInsert()
     var
         LibrarySetup: Record "Library General Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;
     begin
-        if "BookID" = '' then begin
+        if "DamagedBookID" = '' then begin
             LibrarySetup.Get();
             LibrarySetup.TestField("Damaged Books Nos.");
-            NoSeriesMgt.InitSeries(LibrarySetup."Damaged Books Nos.", '', 0D, DamagedBookID, LibrarySetup."Damaged Books Nos.");
-            if DamagedBookID = '' then
-                Error('Failed to generate a unique DamagedBookID.');
+            DamagedBookID := NoSeriesMgt.GetNextNo(LibrarySetup."Damaged Books Nos.", WorkDate(), true);
         end;
     end;
 }

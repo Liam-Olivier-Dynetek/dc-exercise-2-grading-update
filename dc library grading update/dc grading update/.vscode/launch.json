@@ -9,10 +9,10 @@
             "server": "http://bcserver",
             "serverInstance": "BC",
             "authentication": "UserPassword",
-            "startupObjectId": 50751,
+            "startupObjectId": 50700,
             "breakOnError": "All",
             "breakOnRecordWrite": "None",
-            "launchBrowser": true,
+            "launchBrowser": false,
             "enableSqlInformationDebugger": true,
             "enableLongRunningSqlStatements": true,
             "longRunningSqlStatementsThreshold": 500,
@@ -20,8 +20,6 @@
             "tenant": "default",
             "usePublicURLFromServer": true,
             "schemaUpdateMode": "ForceSync"
-
         }
-        
     ]
 }

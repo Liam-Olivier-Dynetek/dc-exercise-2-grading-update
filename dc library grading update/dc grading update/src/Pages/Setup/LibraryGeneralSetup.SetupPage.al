@@ -30,4 +30,8 @@ page 50754 "Library General Setup"
             
         }
     }
+    trigger OnOpenPage()
+    begin
+        Rec.InsertIfNotExists();
+    end;
 }

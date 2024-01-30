@@ -33,8 +33,7 @@ codeunit 50750 "Book Grading Check"
     var
         UpdateStatus: Codeunit "Update Rent Status";
     begin
-        
-        UpdateStatus.HandleBook(Book,'DamagedBook');
+        UpdateStatus.HandleBook(Book, 'DamagedBook');
     end;
 
     local procedure AddToDamagedBooks(Book: Record "Library Table")
@@ -49,37 +48,36 @@ codeunit 50750 "Book Grading Check"
         DamagedBook.Insert();
     end;
 
-
-local procedure CheckBookStatusAndUpdateRating()
-var
-    Book: Record "Library Table";
-begin
-    if Book.FindSet() then begin
-        repeat
-            if (Book.Rented <> Book.Rented::"Out of Store") and 
-               ((Book."Quality Rating" = Enum::"Quality Grading"::"A") or 
-                (Book."Quality Rating" = Enum::"Quality Grading"::"B") or 
-                (Book."Quality Rating" = Enum::"Quality Grading"::"C")) then begin
-                Book.Rented := Book.Rented::Available;
-                Book.Modify();
-            end;
-        until Book.Next() = 0;
+    local procedure CheckBookStatusAndUpdateRating()
+    var
+        Book: Record "Library Table";
+    begin
+        if Book.FindSet() then begin
+            repeat
+                if (Book.Rented <> Book.Rented::"Out of Store") and
+                   ((Book."Quality Rating" = Enum::"Quality Grading"::"A") or
+                    (Book."Quality Rating" = Enum::"Quality Grading"::"B") or
+                    (Book."Quality Rating" = Enum::"Quality Grading"::"C")) then begin
+                    Book.Rented := Book.Rented::Available;
+                    Book.Modify();
+                end;
+            until Book.Next() = 0;
+        end;
     end;
-end;
 
-local procedure ArchiveLowQualityBooks()
-var
-    Book: Record "Library Table";
-begin
-    if Book.FindSet() then begin
-        repeat
-            if Book."Quality Rating" = Enum::"Quality Grading"::"F" then begin
-                Book.Rented := Book.Rented::Archived;
-                Book.Modify();
-            end;
-        until Book.Next() = 0;
+    local procedure ArchiveLowQualityBooks()
+    var
+        Book: Record "Library Table";
+    begin
+        if Book.FindSet() then begin
+            repeat
+                if Book."Quality Rating" = Enum::"Quality Grading"::"F" then begin
+                    Book.Rented := Book.Rented::Archived;
+                    Book.Modify();
+                end;
+            until Book.Next() = 0;
+        end;
     end;
-end;
 
 }
 

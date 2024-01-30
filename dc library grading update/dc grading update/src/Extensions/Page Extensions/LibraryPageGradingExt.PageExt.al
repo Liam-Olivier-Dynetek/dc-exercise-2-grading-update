@@ -67,12 +67,4 @@ pageextension 50750 "Library Page Grading Ext" extends "Library List"
             }
         }
     }
-
-    trigger OnOpenPage();
-    var
-    DateCheck: Codeunit "Date Checks";
-    begin
-        Codeunit.Run(Codeunit::"Book Grading Check",Rec);
-        DateCheck.CheckDates();
-    end;
 }
