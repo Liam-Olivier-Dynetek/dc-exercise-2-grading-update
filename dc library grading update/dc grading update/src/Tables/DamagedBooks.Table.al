@@ -39,10 +39,10 @@ table 50750 "Damaged Books"
         LibrarySetup: Record "Library General Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;
     begin
-        if "DamagedBookID" = '' then begin
-            LibrarySetup.Get();
+        if Rec.DamagedBookID = '' then begin
+            LibrarySetup.GetRecordOnce();
             LibrarySetup.TestField("Damaged Books Nos.");
-            DamagedBookID := NoSeriesMgt.GetNextNo(LibrarySetup."Damaged Books Nos.", WorkDate(), true);
+            Rec.DamagedBookID := NoSeriesMgt.GetNextNo(LibrarySetup."Damaged Books Nos.", WorkDate(), true);
         end;
     end;
 }

@@ -12,7 +12,7 @@
             "startupObjectId": 22,
             "startupObjectType": "Page",
             "breakOnError": "All",
-            "launchBrowser": true,
+            "launchBrowser": false,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,
             "tenant": "default",

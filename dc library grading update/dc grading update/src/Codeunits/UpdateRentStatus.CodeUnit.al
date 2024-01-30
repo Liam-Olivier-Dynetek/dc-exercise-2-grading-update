@@ -27,10 +27,8 @@ begin
 end;
     local procedure DamagedBook(var "Library Table": Record "Library Table")
     begin
-        if "Library Table"."Rented" = Enum::"Book Status"::Available then begin
             "Library Table"."Rented" := Enum::"Book Status"::Damaged;
             "Library Table".Modify();
-        end;
     end;
 
    local procedure ReturnBook(var "Library Table": Record "Library Table")

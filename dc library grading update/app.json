@@ -1,32 +1,39 @@
 {
-  "id": "203068e3-8c4b-4e5a-88c6-e6dd49648485",
-  "name": "dc library grading update",
-  "publisher": "Default Publisher",
-  "version": "1.0.0.0",
-  "brief": "",
-  "description": "",
-  "privacyStatement": "",
-  "EULA": "",
-  "help": "",
-  "url": "",
-  "logo": "",
-  "dependencies": [],
-  "screenshots": [],
-  "platform": "1.0.0.0",
-  "application": "21.0.0.0",
-  "idRanges": [
-    {
-      "from": 50750,
-      "to": 50800
+    "id": "59feaa9c-a890-4d03-afb3-9c176689bb47",
+    "name": "dc grading update",
+    "publisher": "Default Publisher",
+    "version": "23.2.20240118.1620",
+    "brief": "",
+    "description": "",
+    "privacyStatement": "",
+    "EULA": "",
+    "help": "",
+    "url": "",
+    "logo": "",
+    "dependencies": [
+      {
+        "id": "eba12194-30f3-469c-9c18-32cd5e42c66a",
+        "name": "dc library core",
+        "publisher": "Default Publisher",
+        "version": "1.0.0.0"
+      }
+    ],
+    "screenshots": [],
+    "platform": "1.0.0.0",
+    "application": "22.0.0.0",
+    "idRanges": [
+      {
+        "from": 50750,
+        "to": 50800
+      }
+    ],
+    "features": [
+      "NoImplicitWith"
+    ],
+    "resourceExposurePolicy": {
+      "allowDebugging": true,
+      "allowDownloadingSource": true,
+      "includeSourceInSymbolFile": true
     }
-  ],
-  "resourceExposurePolicy": {
-    "allowDebugging": true,
-    "allowDownloadingSource": true,
-    "includeSourceInSymbolFile": true
-  },
-  "runtime": "10.0",
-  "features": [
-    "NoImplicitWith"
-  ]
-}
+  }
+  

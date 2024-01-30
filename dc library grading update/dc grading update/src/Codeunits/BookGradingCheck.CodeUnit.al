@@ -29,7 +29,7 @@ codeunit 50750 "Book Grading Check"
         end;
     end;
 
-    local procedure ChangeStatusToOut(Book: Record "Library Table")
+    local procedure ChangeStatusToOut(var Book: Record "Library Table")
     var
         UpdateStatus: Codeunit "Update Rent Status";
     begin
@@ -45,7 +45,7 @@ codeunit 50750 "Book Grading Check"
         DamagedBook."Book Title" := Book."Title";
         DamagedBook."Book Grading" := Book."Quality Rating";
         DamagedBook."Book Status" := Book.Rented;
-        DamagedBook.Insert();
+        DamagedBook.Insert(true);
     end;
 
     local procedure CheckBookStatusAndUpdateRating()

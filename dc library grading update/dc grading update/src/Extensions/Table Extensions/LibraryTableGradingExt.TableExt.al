@@ -17,12 +17,12 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
             Caption = 'Previous Grading';
         }
         field(50103; Comment; Text[150])
-        {   
+        {
             Caption = 'Comment';
         }
-        field(50104;"Due Date"; Date)
+        field(50104; "Due Date"; Date)
         {
-            Caption  = 'Due Date';
+            Caption = 'Due Date';
             TableRelation = "Book Orders Table"."Retrun Date";
         }
     }
@@ -32,11 +32,10 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
         LibrarySetup: Record "Library General Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;
     begin
-        if "BookID" = '' then
-        begin
-            LibrarySetup.Get();
+        if Rec.BookID = '' then begin
+            LibrarySetup.GetRecordOnce();
             LibrarySetup.TestField("Library Nos.");
-            NoSeriesMgt.InitSeries(LibrarySetup."Library Nos.", xRec.BookID, 0D, "BookID", LibrarySetup."Library Nos.");
+            Rec.Validate(BookID, NoSeriesMgt.GetNextNo(LibrarySetup."Library Nos.", WorkDate(), true));
         end;
     end;
 }
