@@ -1,6 +1,6 @@
 page 50704 CreateOrder
 {
-    PageType = Card;
+    PageType = List;
     ApplicationArea = All;
     UsageCategory = Administration;
     SourceTable = "Library Table";
@@ -9,7 +9,7 @@ page 50704 CreateOrder
     {
         area(Content)
         {
-            group(GroupName)
+            repeater(General)
             {
                 
                 field(Title; Rec.Title)

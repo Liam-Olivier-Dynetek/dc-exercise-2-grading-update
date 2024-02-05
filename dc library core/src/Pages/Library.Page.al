@@ -69,8 +69,12 @@ page 50700 "Library List"
                 Image = BankAccountRec;
 
                 trigger OnAction();
+                var
+                LibraryList: Record "Library Table";
                 begin
-                    Page.RunModal(Page::CreateOrder,Rec)
+                    currpage.SetSelectionFilter(LibraryList);
+                    if LibraryList.FindSet() then
+                    Page.RunModal(Page::CreateOrder,LibraryList);
                 end;
             }
 
@@ -92,10 +96,6 @@ page 50700 "Library List"
                     Rec.SetRange(PublicationDate, Date2YearsBack, CurrentWorkDate);
                 end;
             }
-
         }
     }
-
-
-
 }
