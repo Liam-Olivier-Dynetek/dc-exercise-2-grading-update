@@ -28,6 +28,8 @@ pageextension 50750 "Library Page Grading Ext" extends "Library List"
         }
     }
 
+
+
     actions
     {
         addafter("Rent Book")
@@ -44,7 +46,7 @@ pageextension 50750 "Library Page Grading Ext" extends "Library List"
 
                 trigger OnAction();
                 var
-                ViewOrders: Page "Book Orders Page";
+                    ViewOrders: Page "Book Orders Page";
                 begin
                     ViewOrders.RunModal();
                     Rec."Previous Rating" := Rec."Quality Rating";
@@ -62,9 +64,30 @@ pageextension 50750 "Library Page Grading Ext" extends "Library List"
 
                 trigger OnAction();
                 begin
-                    Page.RunModal(Page::"Grade Book",Rec);
+                    Page.RunModal(Page::"Grade Book", Rec);
+                end;
+            }
+
+            action("Run Overdue Books Report")
+            {
+                ApplicationArea = All;
+                Image = Report;
+                Promoted = true;
+                PromotedCategory = Process;
+                ToolTip = 'Run the Check for Overdue Books.';
+
+                trigger OnAction()
+                var
+                    DateCheck: Codeunit "Date Checks";
+                    LibraryBooks: Record "Library Table";
+                begin
+                    DateCheck.CheckDates();
+                    LibraryBooks.SetRange(Rented, Rec.Rented::OverDue);
+                    if LibraryBooks.FindSet() then
+                        Report.RunModal(Report::"Overdue Books Report", false, false, LibraryBooks);
                 end;
             }
         }
     }
+
 }
