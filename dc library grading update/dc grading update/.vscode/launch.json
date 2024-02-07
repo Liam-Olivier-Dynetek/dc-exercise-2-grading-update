@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Publish: Your own server",
+            "type": "al",
+            "request": "launch",
+            "environmentType": "OnPrem",
+            "server": "http://bcserver",
+            "serverInstance": "BC",
+            "authentication": "UserPassword",
+            "startupObjectId": 50700,
+            "breakOnError": "All",
+            "breakOnRecordWrite": "None",
+            "launchBrowser": false,
+            "enableSqlInformationDebugger": true,
+            "enableLongRunningSqlStatements": true,
+            "longRunningSqlStatementsThreshold": 500,
+            "numberOfSqlStatements": 10,
+            "tenant": "default",
+            "usePublicURLFromServer": true,
+            "schemaUpdateMode": "ForceSync"
+        }
+    ]
+}
