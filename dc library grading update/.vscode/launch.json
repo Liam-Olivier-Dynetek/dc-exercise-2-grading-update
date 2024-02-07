@@ -2,21 +2,24 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Your own server",
-            "request": "launch",
+            "name": "Publish: Your own server",
             "type": "al",
+            "request": "launch",
             "environmentType": "OnPrem",
             "server": "http://bcserver",
             "serverInstance": "BC",
             "authentication": "UserPassword",
-            "startupObjectId": 22,
-            "startupObjectType": "Page",
+            "startupObjectId": 50756,
             "breakOnError": "All",
-            "launchBrowser": false,
-            "enableLongRunningSqlStatements": true,
+            "breakOnRecordWrite": "None",
+            "launchBrowser": true,
             "enableSqlInformationDebugger": true,
+            "enableLongRunningSqlStatements": true,
+            "longRunningSqlStatementsThreshold": 500,
+            "numberOfSqlStatements": 10,
             "tenant": "default",
-            "usePublicURLFromServer": true
-        }
+            "usePublicURLFromServer": true,
+            "schemaUpdateMode": "ForceSync"
+        },
     ]
 }

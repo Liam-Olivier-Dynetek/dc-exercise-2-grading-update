@@ -40,6 +40,7 @@ page 50700 "Library List"
                 {
                     ToolTip = 'Specifies the value of the Rented field.';
                 }
+                
             }
         }
     }

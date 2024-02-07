@@ -137,7 +137,7 @@ table 50700 "Library Table"
         if NewRecord.IsEmpty() then
             Message('The selected book is empty')
         else
-        NewRecord.Author := SelectedRecord.Author;
+            NewRecord.Author := SelectedRecord.Author;
         NewRecord.Series := SelectedRecord.Series;
         NewRecord.Prequel := SelectedRecord.Prequel;
         NewRecord.Genre := SelectedRecord.Genre;
