@@ -1,4 +1,4 @@
-pageextension 50700 "Customer Page" extends "Customer List"
+pageextension 50700 "Customer Page Ext" extends "Customer List"
 {
     layout
     {
@@ -6,6 +6,7 @@ pageextension 50700 "Customer Page" extends "Customer List"
         {
             field("Order Number";Rec."Order Number")
             {
+                ToolTip = 'Shows the Order Number';
                 Caption = 'Order Number';
                 ApplicationArea = All;
             }

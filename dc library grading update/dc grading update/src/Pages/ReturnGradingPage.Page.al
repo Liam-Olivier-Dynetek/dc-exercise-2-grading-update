@@ -4,7 +4,7 @@ page 50750 "Return Grading Page"
     ApplicationArea = All;
     UsageCategory = None;
     SourceTable = "Library Table";
-    
+
     layout
     {
         area(Content)
@@ -60,7 +60,7 @@ page 50750 "Return Grading Page"
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
@@ -70,13 +70,13 @@ page 50750 "Return Grading Page"
                 ApplicationArea = All;
                 Caption = 'Confirm';
                 Image = Completed;
-                
+                ToolTip = 'Executes the Confirm action.';
                 trigger OnAction()
                 var
-                ConfirmReturn: Codeunit "Grade Books";
-                UpdateStatus: Codeunit "Update Rent Status";
+                    ConfirmReturn: Codeunit "Grade Books";
+                    UpdateStatus: Codeunit "Update Rent Status";
                 begin
-                    UpdateStatus.HandleBook(Rec,'ReturnBook');
+                    UpdateStatus.HandleBook(Rec, 'ReturnBook');
                     ConfirmReturn.ConfirmReturn(Rec);
                     Message('Book returned.');
                 end;

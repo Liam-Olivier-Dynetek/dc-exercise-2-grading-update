@@ -1,4 +1,4 @@
-table 50702 "Book Series"
+table 50702 "Book Series Table"
 {
     DataClassification = CustomerContent;
     
@@ -51,9 +51,6 @@ table 50702 "Book Series"
     {
         // Add changes to field groups here
     }
-    
-    var
-        myInt: Integer;
     
     trigger OnInsert()
     begin

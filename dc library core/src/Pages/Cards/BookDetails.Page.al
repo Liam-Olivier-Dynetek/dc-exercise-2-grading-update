@@ -66,6 +66,7 @@ page 50703 "Book Details"
             action("Rent This Book")
             {
                 ApplicationArea = All;
+                ToolTip = 'Navigates to Rent book Page.';
 
                 trigger OnAction()
                 begin

@@ -45,19 +45,4 @@ page 50753 "Returned Books"
         }
     }
     
-    actions
-    {
-        area(Processing)
-        {
-            action(ActionName)
-            {
-                ApplicationArea = All;
-                
-                trigger OnAction()
-                begin
-                    
-                end;
-            }
-        }
-    }
 }

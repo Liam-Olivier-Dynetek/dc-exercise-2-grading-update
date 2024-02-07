@@ -42,7 +42,7 @@ pageextension 50750 "Library Page Grading Ext" extends "Library List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-
+                ToolTip = 'Executes the View Transactions action.';
 
                 trigger OnAction();
                 var
@@ -61,10 +61,11 @@ pageextension 50750 "Library Page Grading Ext" extends "Library List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Grade Book action.';
 
                 trigger OnAction();
                 begin
-                    Page.RunModal(Page::"Grade Book", Rec);
+                    Page.RunModal(Page::"Grade Books", Rec);
                 end;
             }
 
@@ -78,8 +79,9 @@ pageextension 50750 "Library Page Grading Ext" extends "Library List"
 
                 trigger OnAction()
                 var
-                    DateCheck: Codeunit "Date Checks";
                     LibraryBooks: Record "Library Table";
+                    DateCheck: Codeunit "Date Checks";
+
                 begin
                     DateCheck.CheckDates();
                     LibraryBooks.SetRange(Rented, Rec.Rented::OverDue);

@@ -58,6 +58,8 @@ page 50704 CreateOrder
             {
                 Caption = 'Place Order';
                 ApplicationArea = All;
+                ToolTip = 'Creates the Order';
+
                 trigger OnAction()
                 var
                 NewOrder: Record "Book Orders Table";

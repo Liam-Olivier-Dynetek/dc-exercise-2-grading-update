@@ -57,7 +57,7 @@ page 50700 "Library List"
 
                 trigger OnAction();
                 begin
-                    Page.RunModal(Page::"Add Sequel",Rec)
+                    Page.RunModal(Page::"Add Sequel Book",Rec)
                 end;
             }
 

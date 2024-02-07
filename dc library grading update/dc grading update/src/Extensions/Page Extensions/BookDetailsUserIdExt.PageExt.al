@@ -28,7 +28,7 @@ pageextension 50751 "Book Details UserId Ext" extends "Book Details"
             }
         }
     }
-    
+
     actions
     {
         addafter("Rent This Book")
@@ -41,10 +41,11 @@ pageextension 50751 "Book Details UserId Ext" extends "Book Details"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Grade Book action.';
 
                 trigger OnAction();
                 begin
-                    Page.RunModal(Page::"Grade Book",Rec)
+                    Page.RunModal(Page::"Grade Books", Rec)
                 end;
             }
             action("Return Book")
@@ -55,14 +56,15 @@ pageextension 50751 "Book Details UserId Ext" extends "Book Details"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
+                ToolTip = 'Executes the Return This book action.';
 
                 trigger OnAction();
                 begin
-                    Page.RunModal(Page::"Return Grading Page",Rec)
+                    Page.RunModal(Page::"Return Grading Page", Rec)
                 end;
             }
         }
-        
+
     }
-    
+
 }
