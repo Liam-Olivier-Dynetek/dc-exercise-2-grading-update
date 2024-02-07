@@ -1,17 +1,17 @@
-page 50752 "Grade Book"
+page 50752 "Grade Books"
 {
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = None;
     SourceTable = "Library Table";
-    
+
     layout
     {
         area(Content)
         {
             group(General)
             {
-                
+
                 field(Title; Rec.Title)
                 {
                     ApplicationArea = All;
@@ -37,7 +37,7 @@ page 50752 "Grade Book"
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
@@ -49,10 +49,28 @@ page 50752 "Grade Book"
                 Promoted = true;
                 PromotedCategory = Process;
                 Caption = 'Save Changes';
+                ToolTip = 'Executes the Save Changes action.';
+
                 trigger OnAction();
                 begin
                     Codeunit.Run(Codeunit::"Book Grading Check");
                     Message('Book Updated');
+                end;
+            }
+
+            action(Exit)
+            {
+                ApplicationArea = All;
+                Image = Save;
+                Promoted = true;
+                PromotedCategory = Process;
+                Caption = 'Exit';
+                ToolTip = 'Exits current page';
+                
+                trigger OnAction();
+                begin
+                    Message('Closing page...');
+                    exit;
                 end;
             }
         }

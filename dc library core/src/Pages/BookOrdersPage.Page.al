@@ -1,6 +1,6 @@
 page 50701 "Book Orders Page"
 {
-    PageType = Card;
+    PageType = List;
     ApplicationArea = All;
     UsageCategory = Lists;
     SourceTable = "Book Orders Table";

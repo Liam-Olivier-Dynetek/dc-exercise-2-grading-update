@@ -3,8 +3,7 @@ codeunit 50750 "Book Grading Check"
     TableNo = "Library Table";
 
     trigger OnRun()
-    var
-        RecordRatings: Record "Library Table";
+    
     begin
         CheckBookQuality();
         CheckBookStatusAndUpdateRating();
@@ -15,7 +14,7 @@ codeunit 50750 "Book Grading Check"
     var
         Book: Record "Library Table";
         DamagedBook: Record "Damaged Books";
-        UpdateStatus: Codeunit "Update Rent Status";
+
     begin
         Book.SetRange("Quality Rating", Enum::"Quality Grading"::"D");
         if Book.FindSet() then begin

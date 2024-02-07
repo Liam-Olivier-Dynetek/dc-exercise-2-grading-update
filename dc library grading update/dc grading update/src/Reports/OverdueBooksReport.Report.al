@@ -66,32 +66,6 @@ report 50750 "Overdue Books Report"
         }
     }
 
-    requestpage
-    {
-        layout
-        {
-            area(Content)
-            {
-                group(General)
-                {
-
-                }
-            }
-        }
-
-        actions
-        {
-            area(processing)
-            {
-                action(ActionName)
-                {
-                    ApplicationArea = All;
-
-                }
-            }
-        }
-    }
-
     rendering
     {
         layout(LayoutName)

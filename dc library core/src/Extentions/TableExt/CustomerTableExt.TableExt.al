@@ -9,5 +9,5 @@ tableextension 50700 "Customer Table Ext" extends Customer
             Editable = true;
         }
     }
-    
+
 }

@@ -1,4 +1,4 @@
-page 50702 "Add Sequel"
+page 50702 "Add Sequel Book"
 {
     PageType = Card;
     SourceTable = "Library Table"; 
@@ -85,6 +85,10 @@ page 50702 "Add Sequel"
             {
                 action("OK")
                 {
+                    ApplicationArea = All;
+                    Image = Confirm;
+                    ToolTip = 'Confirms action.';
+
                     trigger OnAction()
                     var
                     CurrentSelectedBook: Record "Library Table";
@@ -95,9 +99,13 @@ page 50702 "Add Sequel"
 
                 action("Cancel")
                 {
+                    ApplicationArea = All;
+                    Image = Cancel;
+                    ToolTip = 'Cancels Action.';
+
                     trigger OnAction()
                     begin
-                        
+                        exit;
                     end;
                 }
             }
