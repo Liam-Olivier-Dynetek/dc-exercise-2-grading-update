@@ -13,6 +13,11 @@ page 50756 "Role Page"
                 {
                     ApplicationArea = All;
                 }
+                part(Part4; "My Customers")
+                {
+                    Caption = 'My Customers.';
+                    ApplicationArea = All;
+                }
                 part(Part2; "Library List")
                 {
                     Caption = 'Books';
@@ -33,22 +38,20 @@ page 50756 "Role Page"
         {
             action("Open Library")
             {
-                RunObject= page "Library List";
+                RunObject = page "Library List";
                 ToolTip = 'Opens the Library Page';
                 Visible = true;
                 ApplicationArea = All;
-                Image=TileGreen;
+                Image = TileGreen;
             }
         }
 
         area(Creation)
         {
-            // Add actions that create new records here
         }
 
         area(Reporting)
         {
-            // Add actions that run reports here
         }
     }
 }
