@@ -33,27 +33,27 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
         }
         field(50106; "New Books"; Integer)
         {
-            CalcFormula = count("Library Table" WHERE("Quality Rating" = Const(A)));
+            CalcFormula = count("Library Table" where("Quality Rating" = const(A)));
             FieldClass = FlowField;
         }
         field(50107; "Damaged Books"; Integer)
         {
-            CalcFormula = count("Library Table" WHERE(Rented = CONST(Damaged)));
+            CalcFormula = count("Library Table" where(Rented = const(Damaged)));
             FieldClass = FlowField;
         }
         field(50108; "Rented Books"; Integer)
         {
-            CalcFormula = count("Library Table" WHERE(Rented = CONST("Out of Store")));
+            CalcFormula = count("Library Table" where(Rented = const("Out of Store")));
             FieldClass = FlowField;
         }
         field(50109; "Available Books"; Integer)
         {
-            CalcFormula = count("Library Table" WHERE(Rented = CONST(Available)));
+            CalcFormula = count("Library Table" where(Rented = const(Available)));
             FieldClass = FlowField;
         }
         // field(50110; "Recently Added Books"; Integer)
         // {
-        //     // CalcFormula = count("Library Table" WHERE("Date Added" = FILTER(Workdate()-30..WorkDate)));
+        //     // CalcFormula = count("Library Table" where("Date Added" = FILTER(Workdate()-30..WorkDate)));
         //     FieldClass = FlowField;
         // }
     }
