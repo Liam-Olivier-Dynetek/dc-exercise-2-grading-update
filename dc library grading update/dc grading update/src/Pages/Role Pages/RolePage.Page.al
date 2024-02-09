@@ -23,9 +23,9 @@ page 50756 "Role Page"
 
     actions
     {
-        area(Sections)
+        area(Sections) //Next to the CRONUS logo
         {
-            //Next to the CRONUS logo
+            
         }
 
         area(Embedding) //Below the CRONUS logo

@@ -25,7 +25,7 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
             Caption = 'Due Date';
             TableRelation = "Book Orders Table"."Retrun Date";
         }
-
+        //FlowFields
         field(50105; "Unique Books"; Integer)
         {
             CalcFormula = count("Library Table");
@@ -51,7 +51,7 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
             CalcFormula = count("Library Table" where(Rented = const(Available)));
             FieldClass = FlowField;
         }
-
+        // FlowFilters
         field(50110; "Books Added this Month"; Date)
         {
             FieldClass = FlowFilter;
@@ -67,7 +67,6 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
 
     }
 
-   
 
     trigger OnInsert()
     var
