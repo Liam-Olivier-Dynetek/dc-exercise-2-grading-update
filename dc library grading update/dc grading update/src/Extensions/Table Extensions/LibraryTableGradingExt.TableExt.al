@@ -51,12 +51,23 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
             CalcFormula = count("Library Table" where(Rented = const(Available)));
             FieldClass = FlowField;
         }
-        // field(50110; "Recently Added Books"; Integer)
-        // {
-        //     // CalcFormula = count("Library Table" where("Date Added" = FILTER(Workdate()-30..WorkDate)));
-        //     FieldClass = FlowField;
-        // }
+
+        field(50110; "Books Added this Month"; Date)
+        {
+            FieldClass = FlowFilter;
+        }
+        field(50111; "Books Added this Week"; Date)
+        {
+            FieldClass = FlowFilter;
+        }
+        field(50112; "Books Added Today"; Date)
+        {
+            FieldClass = FlowFilter;
+        }
+
     }
+
+   
 
     trigger OnInsert()
     var
