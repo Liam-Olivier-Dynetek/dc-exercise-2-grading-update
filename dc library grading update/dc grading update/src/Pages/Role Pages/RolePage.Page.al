@@ -13,7 +13,7 @@ page 50756 "Role Page"
                 Caption = 'Library Overview';
                 ApplicationArea = All;
             }
-            part(Part2; "Total Books Cue")
+            part(Part2; "New Releases Cue")
             {
                 Caption = 'Total Books';
                 ApplicationArea = All;
@@ -35,7 +35,7 @@ page 50756 "Role Page"
                 Caption = 'Damaged Books';
                 RunObject = Page "Damaged Books";
                 ApplicationArea = All;
-                ToolTip = 'Executes the Damaged Books action.';
+                ToolTip = 'Opens the Damaged Books.';
             }
 
             action(Library)
@@ -43,16 +43,16 @@ page 50756 "Role Page"
                 Caption = 'Library';
                 RunObject = Page "Library List";
                 ApplicationArea = All;
-                ToolTip = 'Executes the Library action.';
+                ToolTip = 'Opens the Library.';
             }
-
-            action(Overview)
+            action(Dashboard)
             {
-                Caption = 'Overview of Library';
+                Caption = 'Dashboard';
                 RunObject = Page "Dash Board";
                 ApplicationArea = All;
-                ToolTip = 'Displays the dashboard.';
+                ToolTip = 'Opens the Dashboard.';
             }
+
         }
 
         area(Processing)

@@ -2,77 +2,101 @@ page 50760 "Dash Board"
 {
     PageType = Card;
     Caption = 'DashBoard';
-    SourceTable = "Library Table";
+    SourceTable = Dashboard;
+    SourceTableTemporary = true;
+
 
     layout
     {
         area(Content)
         {
-            // group(Filters)
-            // {
+            group(Filters)
+            {
+                field(Author; AuthorName)
+                {
+                    Caption = 'Author Name';
+                    ToolTip = 'Specifies the value of the AuthorName field.';
+                    ApplicationArea = All;
+                    Editable = true;
 
-            //     field("Start Date"; "Starting Date")
-            //     {
-            //         ToolTip = 'Specifies the value of the Date field.';
-            //         Caption = 'Start Date';
-            //         ApplicationArea = All;
-            //         Editable = true;
-            //     }
-            //     field("End Date"; "Ending Date")
-            //     {
-            //         ToolTip = 'Specifies the value of the Date field.';
-            //         Caption = 'Ending Date';
-            //         ApplicationArea = All;
-            //         Editable = true;
-            //     }
-            // }
-            group(OverView)
-            {
-                part("Library OverView"; "Library Tracking")
-                {
-                    ApplicationArea = All;
+                    trigger OnValidate();
+                    begin
+                        Rec."Author Filter" := AuthorName;
+                        Rec.UpdateCounts();
+                        CurrPage.Update();
+                    end;
                 }
-            }
+                field(Genre; Genre)
+                {
+                    Caption = 'Genre';
+                    ToolTip = 'Specifies the value of the Genre field.';
+                    ApplicationArea = All;
+                    Editable = true;
 
-            group("List of Books")
-            {
-                part(Library; "Library List")
-                {
-                    ApplicationArea = All;
+                    trigger OnValidate();
+                    begin
+                        Rec."Genre Filter" := Genre;
+                        Rec.UpdateCounts();
+                        CurrPage.Update();
+                    end;
                 }
+                field("Release Date"; ReleaseDate)
+                {
+                    Caption = 'Release Date';
+                    ToolTip = 'Specifies the value of the Release-date field.';
+                    ApplicationArea = All;
+                    Editable = true;
+
+                    trigger OnValidate();
+                    begin
+                        Rec."Date Filter" := ReleaseDate;
+                        Rec.UpdateCounts();
+                        CurrPage.Update();
+                    end;
+                }
+
             }
-            group("Books that need repair")
+            group(Overview)
             {
-                part("Damaged Books"; "Damaged Books")
+
+                field("Available Books"; Rec."Available Books")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Available Books field.';
+                }
+                field("Damaged Books"; Rec."Damaged Books")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Damaged Books field.';
+                }
+                field("New Books"; Rec."New Books")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the New Books field.';
+                }
+                field("Rented Books"; Rec."Rented Books")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Rented Books field.';
+                }
+                field("Unique Books"; Rec."Unique Books")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Unique Books field.';
                 }
             }
         }
     }
 
-    actions
-    {
-        area(Processing)
-        {
-            action("Check for Books in DateFilter")
-            {
-                Caption = 'Check for Books in DateFilter';
-                Image = UpdateDescription;
-                Promoted = true;
-                ToolTip = 'Check for Books in DateFilter';
-                ApplicationArea = All;
+    // trigger OnOpenPage()
+    // begin
+    //     Rec.CheckFiltersEmpty();
+    // end;
 
-                trigger OnAction();
-                begin
-                    Rec.SetRange(SystemCreatedAt, "Starting Date", "Ending Date");
-                end;
-            }
-        }
-    }
 
     var
-        "Starting Date": DateTime;
-        "Ending Date": DateTime;
+        AuthorName: Text[50];
+        Genre: Text[50];
+        ReleaseDate: Date;
 
 }
