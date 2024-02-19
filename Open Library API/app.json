@@ -17,6 +17,18 @@
   "name": "Ascent API Libary",
   "publisher": "Dynetek (Pty) Ltd",
   "version": "20.3.20230908.0821"
+},
+{
+  "id": "59feaa9c-a890-4d03-afb3-9c176689bb47",
+    "name": "dc grading update",
+    "publisher": "Default Publisher",
+    "version": "23.2.20240118.1620"
+},
+{
+  "id": "eba12194-30f3-469c-9c18-32cd5e42c66a",
+  "name": "dc library core",
+  "publisher": "Default Publisher",
+  "version": "1.0.0.0"
 }
   ],
   "screenshots": [],
