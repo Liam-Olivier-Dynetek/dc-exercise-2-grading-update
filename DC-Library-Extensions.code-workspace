@@ -8,6 +8,9 @@
     },
 {
       "path": "dc library core"
+    },
+    {
+        "path": "Open Library API"
     }
     ],
     "settings": {}
