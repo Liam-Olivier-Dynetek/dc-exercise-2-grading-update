@@ -19,9 +19,14 @@ pageextension 50850 "Library Open Library Ext" extends "Library List"
         {
             action("Buy New Books")
             {
+                Caption = 'Add Books to collection';
+                Image = InsertFromCheckJournal;
                 ApplicationArea = All;
                 trigger OnAction()
+                var
+                BuyNewBooks: Page "Buy New Books";
                 begin
+                    BuyNewBooks.RunModal();
                 end;
             }
         }

@@ -2,16 +2,18 @@ codeunit 50850 "Open Library API Requests"
 {
 
 
-
-
-
-     procedure GetBooksByTitle(Query: Text): Text;
+    procedure GetBooksByTitle(Query: Text): Text;
     var
+        OpenLibrarySetup: Record "Open Library Setup";
         AATRestHelper: Codeunit "AAT REST Helper";
         ResponseText: Text;
+
     begin
         // Initialize the request
-        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + Query + '&limit=10');
+        OpenLibrarySetup.GetRecordOnce();
+        OpenLibrarySetup.TestField("OP-LIB No.");
+        AATRestHelper.LoadAPIConfig(OpenLibrarySetup."OP-LIB No.");
+        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '?q=' + Query + '&offset=10');
 
         if AATRestHelper.Send('Book Search Request') then
             ResponseText := AATRestHelper.GetResponseContentAsText();
@@ -19,40 +21,46 @@ codeunit 50850 "Open Library API Requests"
         exit(ResponseText);
     end;
 
-     procedure ProcessResponse(ResponseText: Text)
+    procedure ProcessResponse(ResponseText: Text)
     var
         JSONHelper: Codeunit "AAT JSON Helper";
-        JsonResponse: JsonObject;
-        DocsArray: JsonArray;
-        BookToken: JsonToken;
-        Book: JsonObject;
+        DataObject: JsonObject;
+        Title: Text;
+        Author: Text;
+        FirstYearReleased: Text;
+    begin
+        // Parse the JSON response
+        if not DataObject.ReadFrom(ResponseText) then
+            Error('Invalid JSON response');
+
+        Title := JSONHelper.GetJsonTokenAsValue(DataObject, 'Title').AsText();
+        Author := JSONHelper.GetJsonTokenAsValue(DataObject, 'Author').AsText();
+        FirstYearReleased := JSONHelper.GetJsonTokenAsValue(DataObject, 'FirstYearReleased').AsText();
+    end;
+
+
+
+    procedure InsertBooksIntoLibrary(Query: Text)
+    var
+        Library: Record "Library Table";
+        TempLibrary: Record "Library Table" temporary;
+        ResponseText: Text;
         Title: Text;
         AuthorName: Text;
         FirstPublishYear: Integer;
-        Index: Integer;
     begin
-        // Parse the JSON response
-        if not JsonResponse.ReadFrom(ResponseText) then
-            Error('Invalid JSON response');
+        ResponseText := GetBooksByTitle(Query);
+        ProcessResponse(ResponseText);
 
-        // Get the 'docs' array from the response
-        JSONHelper.GetJsonArray(JsonResponse, 'docs', DocsArray);
+        // Insert the book details into the temporary Library table
+        TempLibrary.Init();
+        TempLibrary.Title := Title;
+        TempLibrary.Author := AuthorName;
+        TempLibrary.FirstPublishYear := FirstPublishYear;
+        TempLibrary.Insert();
 
-        for Index := 0 to DocsArray.Count - 1 do begin
-            DocsArray.Get(Index, BookToken);
-
-            if BookToken.IsObject() then begin
-                Book := BookToken.AsObject();
-
-                // Extract the values from the book document
-                Title := JSONHelper.SelectJsonValueAsText('title', true);
-                AuthorName := JSONHelper.SelectJsonValueAsText('author_name', true);
-                FirstPublishYear := JSONHelper.SelectJsonValueAsInteger('first_publish_year', true);
-
-                // Now you can use these values to create new records
-                // CreateNewRecord(Title, AuthorName, FirstPublishYear);
-            end;
-        end;
+        // If the user confirms, insert the book details into the actual Library table
+        Library := TempLibrary;
+        Library.Insert();
     end;
-
 }
