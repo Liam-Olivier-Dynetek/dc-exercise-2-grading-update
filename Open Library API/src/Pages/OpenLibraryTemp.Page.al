@@ -1,7 +1,7 @@
 page 50852 "Open Library Temp"
 {
     PageType = List;
-    SourceTable = "Library Table";
+    SourceTable = "Temp Library";
     UsageCategory = Administration;
     ApplicationArea = All;
     SourceTableTemporary = true;
@@ -12,26 +12,37 @@ page 50852 "Open Library Temp"
         {
             repeater(General)
             {
-                field("Title"; Title)
+                field("Temp id"; Rec."Temp id")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Temp id field.';
+                }
+
+                field("Title"; Rec.Title)
                 {
                     ApplicationArea = All;
                 }
-                field("Author"; Author)
+                field("Author"; Rec.Author)
                 {
                     ApplicationArea = All;
                 }
-                field("First Publish Year"; FirstPublishYear)
+                field(Pages; Rec.Pages)
                 {
                     ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Pages field.';
                 }
+
             }
         }
     }
 
+    var
+        Title: Text;
+        Author: text;
 
-var 
-Title: Text;
-Author: text;
-FirstPublishYear: Integer;
 
+    trigger OnClosePage()
+    begin
+        Rec.DeleteAll(true);
+    end;
 }

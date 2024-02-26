@@ -27,7 +27,16 @@ page 50754 "Library General Setup"
                     ToolTip = 'Number Series for the Damaged Books';
                 }
             }
-            
+            group("Temporary Books")
+            {
+                field("Temporary Book Nos."; Rec."Temporary Book Nos.")
+                {
+                    Editable = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Number Series for the Temporary Books';
+                }
+            }
+
         }
     }
     trigger OnOpenPage()

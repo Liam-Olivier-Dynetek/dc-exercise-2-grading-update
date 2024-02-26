@@ -1,0 +1,52 @@
+table 50851 "Temp Library"
+{
+    DataClassification = ToBeClassified;
+    
+    fields
+    {
+        field(10; "Temp id"; Code[20])
+        {
+            Editable = false;
+            TableRelation = "No. Series".Code;
+        }
+        field(20; "BookID"; code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(1; "Title"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(2; "Author"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(3; "Pages"; Integer)
+        {
+            DataClassification = ToBeClassified;
+        }
+    }
+
+    keys
+    {
+        key(PK; "Temp id")
+        {
+            Clustered = true;
+        }
+    }
+
+    trigger OnInsert()
+    begin
+        UpdateNos();
+    end;
+
+    procedure UpdateNos()
+    var
+        LibrarySetup: Record "Library General Setup";
+        NoSeriesMgt: Codeunit NoSeriesManagement;
+    begin
+        LibrarySetup.GetRecordOnce();
+        LibrarySetup.TestField("Temporary Book Nos.");
+        Rec."Temp id" := NoSeriesMgt.GetNextNo(LibrarySetup."Temporary Book Nos.",WorkDate(), true);
+    end;
+}

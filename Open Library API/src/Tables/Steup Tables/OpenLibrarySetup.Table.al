@@ -3,7 +3,12 @@ table 50850 "Open Library Setup"
 
     fields
     {
-        field(1; "OP-LIB No."; Code[20])
+        field(1; "No."; Code[20])
+        {
+            Editable = false;
+            NotBlank = true;
+        }
+        field(50850; "OP-LIB No."; Code[20])
         {
             TableRelation = "AAT API"."No.";
         }
@@ -12,7 +17,7 @@ table 50850 "Open Library Setup"
 
     keys
     {
-        key(PK; "OP-LIB No.")
+        key(PK; "No.")
         {
             Clustered = true;
         }

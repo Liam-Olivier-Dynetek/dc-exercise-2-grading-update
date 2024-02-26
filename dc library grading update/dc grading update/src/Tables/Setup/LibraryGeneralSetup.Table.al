@@ -16,6 +16,11 @@ table 50752 "Library General Setup"
             Caption = 'Damaged Books Nos.';
             TableRelation = "No. Series".Code;
         }
+        field(4; "Temporary Book Nos."; Code[20])
+        {
+            Caption = 'Temporary Books Nos.';
+            TableRelation = "No. Series".Code;
+        }
     }
     keys
     {

@@ -1,6 +1,6 @@
 page 50850 "Buy New Books"
 {
-    Caption = 'Book Store';
+    Caption = 'Buy New Books';
     PageType = Card;
     ApplicationArea = All;
     UsageCategory = Administration;
@@ -9,7 +9,7 @@ page 50850 "Buy New Books"
     {
         area(Content)
         {
-            group(GroupName)
+            group(Request)
             {
                 field("Title"; Title)
                 {
@@ -31,7 +31,14 @@ page 50850 "Buy New Books"
                     Caption = 'First Published Year';
                     Editable = false;
                 }
-
+            }
+            group(Results)
+            {
+                part(OpenLibraryResults; "Open Library Temp")
+                {
+                    Caption = 'Open Library Results';
+                    ApplicationArea = ALL;
+                }
             }
         }
     }
@@ -46,21 +53,24 @@ page 50850 "Buy New Books"
                 Caption = 'Add To Library';
                 ToolTip = 'Gets books by title and allows them to be added to the';
                 Image = InsertFromCheckJournal;
+                Promoted = true;
+                PromotedIsBig = true;
                 trigger OnAction()
                 var
+                    TempOpenLibrary: Record "Temp Library";
                     OpenLibraryAPIRequests: Codeunit "Open Library API Requests";
-                    Books: Text;
+                    ResponseText: Text;
                 begin
-                    Books := OpenLibraryAPIRequests.GetBooksByTitle(Title);
-                    if Books <> '' then begin
-                        Message('Are you sure you want to add this to the library?');
-                        OpenLibraryAPIRequests.InsertBooksIntoLibrary(Title);
+                    ResponseText := OpenLibraryAPIRequests.GetBooksByTitle(Title);
+                    OpenLibraryAPIRequests.ProcessJsonArray(ResponseText, TempOpenLibrary);
+
+                    if TempOpenLibrary.FindFirst() then begin
+                        PAGE.RUN(PAGE::"Open Library Temp", TempOpenLibrary);
                     end else begin
                         Message('No books found with the given title.');
                     end;
                 end;
             }
-
         }
     }
 
