@@ -1,4 +1,4 @@
-codeunit 50850 "Open Library API Requests"
+codeunit 50850 "Open Library Book Requests"
 {
 
 
@@ -14,7 +14,7 @@ codeunit 50850 "Open Library API Requests"
         OpenLibrarySetup.GetRecordOnce();
         OpenLibrarySetup.TestField("OP-LIB No.");
         AATRestHelper.LoadAPIConfig(OpenLibrarySetup."OP-LIB No.");
-        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '?title=' + Query + '&fields=title,author_name,number_of_pages_median,first_publish_year,isbn,publisher&limit=5');
+        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '.json?title=' + Query + '&fields=title,author_name,number_of_pages_median,first_publish_year,isbn,publisher&limit=10');
 
         if not AATRESTHelper.Send() then begin
             Commit();
@@ -59,11 +59,11 @@ codeunit 50850 "Open Library API Requests"
         foreach JsonToken in JsonArr do begin
             DocsJsonHelper.InitializeJsonObjectFromToken(JsonToken);
             Title := DocsJsonHelper.SelectJsonValueAsText('$.title', true);
-            AuthorName := GetAuthors(JsonToken);
+            AuthorName := GetAuthors(DocsJsonHelper);
             Pages := DocsJsonHelper.SelectJsonValueAsInteger('$.number_of_pages_median', false);
             FistPublishYear := DocsJsonHelper.SelectJsonValueAsInteger('$.first_publish_year', false);
-            ISBN := GetISBN(JsonToken);
-            Publisher := GetAuthors(JsonToken);
+            ISBN := GetISBN(DocsJsonHelper);
+            Publisher := GetAuthors(DocsJsonHelper);
 
 
             // Add the values to the temporary table
@@ -80,7 +80,7 @@ codeunit 50850 "Open Library API Requests"
         Message('The data has been successfully added to the temporary table.');
     end;
 
-    procedure GetAuthors(var JsonToken: JsonToken): Text
+    procedure GetAuthors(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
         AuthorJsonHelper: Codeunit "AAT JSON Helper";
         JsonArr: JsonArray;
@@ -89,8 +89,10 @@ codeunit 50850 "Open Library API Requests"
         AuthorToken: JsonToken;
         AuthorJsonValue: JsonValue;
     begin
-        AuthorJsonHelper.InitializeJsonObjectFromToken(JsonToken);
-        JsonArr := AuthorJsonHelper.SelectJsonToken('$.author_name', false).AsArray();
+        // AuthorJsonHelper.InitializeJsonObjectFromToken(JsonToken);
+        if not DocsJsonHelper.SelectJsonToken('$.author_name', false).IsArray then
+            exit;
+        JsonArr := DocsJsonHelper.SelectJsonToken('$.author_name', false).AsArray();
 
         if JsonArr.Count() = 0 then begin
             Message('The JsonArray is empty.');
@@ -109,7 +111,7 @@ codeunit 50850 "Open Library API Requests"
     end;
 
     //TODO add ISBN, publisher,
-    procedure GetPublisher(var JsonToken: JsonToken): Text
+    procedure GetPublisher(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
         PublisherJsonHelper: Codeunit "AAT JSON Helper";
         PublisherArr: JsonArray;
@@ -118,8 +120,10 @@ codeunit 50850 "Open Library API Requests"
         PublisherToken: JsonToken;
         PublisherValue: JsonValue;
     begin
-        PublisherJsonHelper.InitializeJsonObjectFromToken(JsonToken);
-        PublisherArr := PublisherJsonHelper.SelectJsonToken('$.publisher', false).AsArray();
+        // PublisherJsonHelper.InitializeJsonObjectFromToken(JsonToken);
+        if not DocsJsonHelper.SelectJsonToken('$.publisher', false).IsArray then
+            exit;
+        PublisherArr := DocsJsonHelper.SelectJsonToken('$.publisher', false).AsArray();
 
         if PublisherArr.Count() = 0 then begin
             Message('The JsonArray is empty.');
@@ -137,7 +141,7 @@ codeunit 50850 "Open Library API Requests"
         exit(PublisherText);
     end;
 
-    procedure GetISBN(var JsonToken: JsonToken): Text
+    procedure GetISBN(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
         ISBNJsonHelper: Codeunit "AAT JSON Helper";
         JsonArr: JsonArray;
@@ -146,8 +150,10 @@ codeunit 50850 "Open Library API Requests"
         IsbnToken: JsonToken;
         IsbnValue: JsonValue;
     begin
-        ISBNJsonHelper.InitializeJsonObjectFromToken(JsonToken);
-        JsonArr := ISBNJsonHelper.SelectJsonToken('$.isbn', false).AsArray();
+        // ISBNJsonHelper.InitializeJsonObjectFromToken(JsonToken);
+        if not DocsJsonHelper.SelectJsonToken('$.isbn', false).IsArray then
+            exit;
+        JsonArr := DocsJsonHelper.SelectJsonToken('$.isbn', false).AsArray();
 
         if JsonArr.Count() = 0 then begin
             Message('The JsonArray is empty.');

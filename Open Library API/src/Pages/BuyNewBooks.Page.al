@@ -55,15 +55,16 @@ page 50850 "Buy New Books"
                 Image = InsertFromCheckJournal;
                 Promoted = true;
                 PromotedIsBig = true;
+                PromotedOnly = true;
                 trigger OnAction()
                 var
                     TempOpenLibrary: Record "Temp Library";
-                    OpenLibraryAPIRequests: Codeunit "Open Library API Requests";
+                    OpenLibraryBookRequests: Codeunit "Open Library Book Requests";
                     // TemPLibrary: Page "Open Library Temp";
                     ResponseText: Text;
                 begin
-                    ResponseText := OpenLibraryAPIRequests.GetBooksByTitle(Title);
-                    OpenLibraryAPIRequests.ProcessJsonArray(ResponseText, TempOpenLibrary);
+                    ResponseText := OpenLibraryBookRequests.GetBooksByTitle(Title);
+                    OpenLibraryBookRequests.ProcessJsonArray(ResponseText, TempOpenLibrary);
 
                     if TempOpenLibrary.FindFirst() then begin
                         PAGE.RUN(PAGE::"Open Library Temp", TempOpenLibrary);

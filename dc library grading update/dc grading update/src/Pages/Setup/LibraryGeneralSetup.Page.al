@@ -36,6 +36,24 @@ page 50754 "Library General Setup"
                     ToolTip = 'Number Series for the Temporary Books';
                 }
             }
+            group("Authors")
+            {
+                field("Author Nos."; Rec."Author Nos.")
+                {
+                    Editable = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Number Series for the Authors';
+                }
+            }
+            group("Temporary Authors")
+            {
+                field("Temporary Author Nos."; Rec."Temporary Author Nos.")
+                {
+                    Editable = true;
+                    ApplicationArea = All;
+                    ToolTip = 'Number Series for the Authors';
+                }
+            }
 
         }
     }

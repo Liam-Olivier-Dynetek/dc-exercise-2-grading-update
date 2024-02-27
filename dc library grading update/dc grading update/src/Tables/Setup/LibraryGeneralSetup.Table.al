@@ -21,6 +21,17 @@ table 50752 "Library General Setup"
             Caption = 'Temporary Books Nos.';
             TableRelation = "No. Series".Code;
         }
+        field(5; "Temporary Author Nos."; Code[20])
+        {
+            Caption = 'Temporary Author Nos.';
+            TableRelation = "No. Series".Code;
+        }
+        field(6; "Author Nos."; Code[20])
+        {
+            Caption = 'Authors Nos.';
+            TableRelation = "No. Series".Code;
+        }
+        
     }
     keys
     {

@@ -20,6 +20,11 @@ page 50851 "Open Library Setup"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the OP-LIB No. field.';
                 }
+                field("Author No."; Rec."Author No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Author No. field.';
+                }
             }
         }
     }

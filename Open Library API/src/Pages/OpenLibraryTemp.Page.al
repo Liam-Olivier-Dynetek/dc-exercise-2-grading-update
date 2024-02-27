@@ -61,7 +61,11 @@ page 50852 "Open Library Temp"
                 var
                     TransferBooks: Codeunit "Transfer Books";
                 begin
-                    TransferBooks.AddToLibrary();
+                    CurrPage.SetSelectionFilter(Rec);
+                    if Rec.FindSet() then
+                        repeat
+                            TransferBooks.AddToLibrary();
+                        until Rec.Next() = 0;
                     Message('Books Added to Library.');
                 end;
             }
