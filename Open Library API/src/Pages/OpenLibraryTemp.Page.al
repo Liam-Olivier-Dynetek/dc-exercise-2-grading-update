@@ -17,7 +17,6 @@ page 50852 "Open Library Temp"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Temp id field.';
                 }
-
                 field("Title"; Rec.Title)
                 {
                     ApplicationArea = All;
@@ -31,16 +30,43 @@ page 50852 "Open Library Temp"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Pages field.';
                 }
-
+                field(Publisher; Rec.Publisher)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the Publiher value.';
+                }
+                field(ISBN; Rec.ISBN)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the ISBN value.';
+                }
+                field(FistPublishYear; Rec.FistPublishYear)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the FistPublishYear field.';
+                }
             }
         }
     }
-
-    var
-        Title: Text;
-        Author: text;
-
-
+    actions
+    {
+        area(Processing)
+        {
+            action("Add to Library")
+            {
+                ApplicationArea = All;
+                Image = InsertFromCheckJournal;
+                ToolTip = 'Add Books From Open Library to Main Library.';
+                trigger OnAction()
+                var
+                    TransferBooks: Codeunit "Transfer Books";
+                begin
+                    TransferBooks.AddToLibrary();
+                    Message('Books Added to Library.');
+                end;
+            }
+        }
+    }
     trigger OnClosePage()
     begin
         Rec.DeleteAll(true);

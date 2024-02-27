@@ -28,14 +28,17 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
     }
 
     trigger OnInsert()
+    begin
+        UpdateNos();
+    end;
+
+    procedure UpdateNos()
     var
         LibrarySetup: Record "Library General Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;
     begin
-        if Rec.BookID = '' then begin
-            LibrarySetup.GetRecordOnce();
-            LibrarySetup.TestField("Library Nos.");
-            Rec.Validate(BookID, NoSeriesMgt.GetNextNo(LibrarySetup."Library Nos.", WorkDate(), true));
-        end;
+        LibrarySetup.GetRecordOnce();
+        LibrarySetup.TestField("Library Nos.");
+        Rec.BookID := NoSeriesMgt.GetNextNo(LibrarySetup."Library Nos.", WorkDate(), true);
     end;
 }

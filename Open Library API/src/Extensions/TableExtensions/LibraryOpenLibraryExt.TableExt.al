@@ -7,6 +7,7 @@ tableextension 50850 "Library Open Libary Ext" extends "Library Table"
         {
             DataClassification = CustomerContent;
         }
+
     }
     
 }

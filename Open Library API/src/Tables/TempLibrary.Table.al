@@ -25,6 +25,19 @@ table 50851 "Temp Library"
         {
             DataClassification = ToBeClassified;
         }
+        field(4; "Publisher"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(5; "ISBN"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(6; "FistPublishYear"; Integer)
+        {
+            DataClassification = ToBeClassified;
+        }
+        
     }
 
     keys

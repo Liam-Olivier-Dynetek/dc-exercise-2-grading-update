@@ -40,7 +40,14 @@ page 50700 "Library List"
                 {
                     ToolTip = 'Specifies the value of the Rented field.';
                 }
-                
+                field(ISBN; Rec.ISBN)
+                {
+                    ToolTip = 'Specifies the value of the ISBN field.';
+                }
+                field(Publisher; Rec.Publisher)
+                {
+                    ToolTip = 'Specifies the value of the Publisher field.';
+                }
             }
         }
     }
@@ -58,7 +65,7 @@ page 50700 "Library List"
 
                 trigger OnAction();
                 begin
-                    Page.RunModal(Page::"Add Sequel Book",Rec)
+                    Page.RunModal(Page::"Add Sequel Book", Rec)
                 end;
             }
 
@@ -71,11 +78,11 @@ page 50700 "Library List"
 
                 trigger OnAction();
                 var
-                LibraryList: Record "Library Table";
+                    LibraryList: Record "Library Table";
                 begin
                     currpage.SetSelectionFilter(LibraryList);
                     if LibraryList.FindSet() then
-                    Page.RunModal(Page::CreateOrder,LibraryList);
+                        Page.RunModal(Page::CreateOrder, LibraryList);
                 end;
             }
 

@@ -103,6 +103,10 @@ table 50700 "Library Table"
         {
             Caption = 'Customer Name';
         }
+        field(170; "ISBN"; Text[100])
+        {
+            Caption = 'ISBN';
+        }
     }
 
     keys
@@ -179,4 +183,7 @@ table 50700 "Library Table"
         else
             Message('The book with ID %1 does not exist.', BookID);
     end;
+
+
+   
 }
