@@ -4,11 +4,6 @@ table 50852 "Authors"
     
     fields
     {
-        // field(1;"Author_ID"; Integer)
-        // {
-        //     Caption = 'Author_ID';
-        //     DataClassification = ToBeClassified;
-        // }
         field(10; "Author No."; Code[20])
         {
             Caption = 'Author No.';

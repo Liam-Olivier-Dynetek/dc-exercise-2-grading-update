@@ -31,7 +31,7 @@ table 50701 "Book Orders Table"
             Editable = True;
             TableRelation = "Library Table".Title;
         }
-        field(50; "Retrun Date"; Date)
+        field(50; "Return Date"; Date)
         {
             Caption = 'Return date';
             DataClassification = CustomerContent;
@@ -89,7 +89,7 @@ table 50701 "Book Orders Table"
             LibraryRec.CustomerID := CustomerID;
             LibraryRec."Customer Name" := CustomerName;
             OrderRec.Title := BookTitle;
-            OrderRec."Retrun Date" := ReturnDate;
+            OrderRec."Return Date" := ReturnDate;
             OrderRec.Insert();
             Message('The book %1 has been added to the order.', BookID);
             LibraryRec.RentedStatusOut(LibraryRec.BookID)

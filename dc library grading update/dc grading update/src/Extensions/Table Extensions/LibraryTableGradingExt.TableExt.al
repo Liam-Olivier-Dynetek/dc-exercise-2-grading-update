@@ -23,7 +23,7 @@ tableextension 50750 "Library Table Grading Ext" extends "Library Table"
         field(50104; "Due Date"; Date)
         {
             Caption = 'Due Date';
-            TableRelation = "Book Orders Table"."Retrun Date";
+            TableRelation = "Book Orders Table"."Return Date";
         }
     }
 

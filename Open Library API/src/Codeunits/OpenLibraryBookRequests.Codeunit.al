@@ -82,7 +82,6 @@ codeunit 50850 "Open Library Book Requests"
 
     procedure GetAuthors(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
-        AuthorJsonHelper: Codeunit "AAT JSON Helper";
         JsonArr: JsonArray;
         AuthorName: Text;
         AuthorsText: Text;
@@ -113,14 +112,12 @@ codeunit 50850 "Open Library Book Requests"
     //TODO add ISBN, publisher,
     procedure GetPublisher(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
-        PublisherJsonHelper: Codeunit "AAT JSON Helper";
         PublisherArr: JsonArray;
         PublisherNo: Text;
         PublisherText: Text;
         PublisherToken: JsonToken;
         PublisherValue: JsonValue;
     begin
-        // PublisherJsonHelper.InitializeJsonObjectFromToken(JsonToken);
         if not DocsJsonHelper.SelectJsonToken('$.publisher', false).IsArray then
             exit;
         PublisherArr := DocsJsonHelper.SelectJsonToken('$.publisher', false).AsArray();
@@ -143,14 +140,12 @@ codeunit 50850 "Open Library Book Requests"
 
     procedure GetISBN(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
-        ISBNJsonHelper: Codeunit "AAT JSON Helper";
         JsonArr: JsonArray;
         IsbnNo: Text;
         IsBnText: Text;
         IsbnToken: JsonToken;
         IsbnValue: JsonValue;
     begin
-        // ISBNJsonHelper.InitializeJsonObjectFromToken(JsonToken);
         if not DocsJsonHelper.SelectJsonToken('$.isbn', false).IsArray then
             exit;
         JsonArr := DocsJsonHelper.SelectJsonToken('$.isbn', false).AsArray();

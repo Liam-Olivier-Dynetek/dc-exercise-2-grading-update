@@ -4,11 +4,6 @@ table 50853 "Temp Authors"
 
     fields
     {
-        // field(1;"Author_ID"; Integer)
-        // {
-        //     Caption = 'Author_ID';
-        //     DataClassification = ToBeClassified;
-        // }
         field(10; "Temp Auth No."; Code[20])
         {
             Caption = 'Temp Author No.';

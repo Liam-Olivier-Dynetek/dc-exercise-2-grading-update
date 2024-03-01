@@ -64,7 +64,6 @@ page 50854 "Add New Authors"
             }
         }
     }
-
     var
     "Author Name": Text;
 }

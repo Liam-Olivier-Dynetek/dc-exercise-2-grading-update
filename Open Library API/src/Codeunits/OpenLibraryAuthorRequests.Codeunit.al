@@ -12,7 +12,6 @@ codeunit 50851 "Open Libary Author Requests"
         OpenLibrarySetup.GetRecordOnce();
         OpenLibrarySetup.TestField("OP-LIB No.");
         AATRestHelper.LoadAPIConfig(OpenLibrarySetup."OP-LIB No.");
-        //fields &fields=name,birth_date,top_work,work_count,top_subjects&
         AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '/authors.json?q=' + Query + '&limit=5');
 
         if not AATRESTHelper.Send() then begin
@@ -80,14 +79,12 @@ codeunit 50851 "Open Libary Author Requests"
 
     procedure GetTopSubjects(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
-        AuthorJsonHelper: Codeunit "AAT JSON Helper";
         JsonArr: JsonArray;
         SubjectName: Text;
         SubjectText: Text;
         SubjectToken: JsonToken;
         SubjectJsonValue: JsonValue;
     begin
-        // AuthorJsonHelper.InitializeJsonObjectFromToken(JsonToken);
         if not DocsJsonHelper.SelectJsonToken('$.top_subjects', false).IsArray then
         exit;
         JsonArr := DocsJsonHelper.SelectJsonToken('$.top_subjects', false).AsArray();

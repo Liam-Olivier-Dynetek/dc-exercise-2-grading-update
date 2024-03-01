@@ -13,6 +13,10 @@ page 50701 "Book Orders Page"
         {
             repeater("Orders")
             {
+                field("Return Date"; Rec."Return Date")
+                {
+                    ToolTip = 'Specifies the value of the Return date field.';
+                }
 
                 field(OrderID; Rec.OrderID)
                 {
@@ -21,10 +25,6 @@ page 50701 "Book Orders Page"
                 field("Book Name"; Rec."Title")
                 {
                     ToolTip = 'Specifies the value of the Book Name field.';
-                }
-                field("Retrun Date"; Rec."Retrun Date")
-                {
-                    ToolTip = 'Due to be returned before';
                 }
             }
         }

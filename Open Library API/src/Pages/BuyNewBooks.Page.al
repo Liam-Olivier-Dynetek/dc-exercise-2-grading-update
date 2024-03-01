@@ -60,7 +60,6 @@ page 50850 "Buy New Books"
                 var
                     TempOpenLibrary: Record "Temp Library";
                     OpenLibraryBookRequests: Codeunit "Open Library Book Requests";
-                    // TemPLibrary: Page "Open Library Temp";
                     ResponseText: Text;
                 begin
                     ResponseText := OpenLibraryBookRequests.GetBooksByTitle(Title);
@@ -68,8 +67,7 @@ page 50850 "Buy New Books"
 
                     if TempOpenLibrary.FindFirst() then begin
                         PAGE.RUN(PAGE::"Open Library Temp", TempOpenLibrary);
-                        // TemPLibrary.Update(true);
-                        // CurrPage.Update(true);
+                        
                     end else begin
                         Message('No books found with the given title.');
                     end;

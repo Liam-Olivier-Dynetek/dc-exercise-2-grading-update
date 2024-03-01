@@ -20,7 +20,7 @@ begin
         repeat
             Library.SetRange("Title", Order.Title);
             if Library.FindFirst() then begin
-                Library."Due Date" := Order."Retrun Date";
+                Library."Due Date" := Order."Return Date";
                 Library.Modify();
             end;
         until Order.Next() = 0;
