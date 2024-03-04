@@ -13,10 +13,10 @@ page 50854 "Add New Authors"
             group(Request)
             {
                 
-                field("Author Name"; "Author Name")
+                field("Author Name"; "Author Key")
                 {
                     ToolTip = 'Specifies the value of the Author Name field.';
-                    Caption = 'Author Name';
+                    Caption = 'Author Key';
                     Editable = True;
                 }
 
@@ -49,11 +49,11 @@ page 50854 "Add New Authors"
                 trigger OnAction()
                 var
                     TempOpenAuthors: Record "Temp Authors";
-                    OpenLibraryAuthorRequests: Codeunit "Open Libary Author Requests";
+                    OpenLibraryAuthorRequests: Codeunit "Open Library Author Requests";
                     ResponseText: Text;
                 begin
-                    ResponseText := OpenLibraryAuthorRequests.GetAuthorsByName("Author Name");
-                    OpenLibraryAuthorRequests.ProcessJsonArray(ResponseText, TempOpenAuthors);
+                    ResponseText := OpenLibraryAuthorRequests.GetAuthorsByKey("Author Key");
+                    OpenLibraryAuthorRequests.ProcessJson(ResponseText, TempOpenAuthors);
 
                     if TempOpenAuthors.FindFirst() then begin
                         PAGE.RUN(PAGE::"Temp Authors", TempOpenAuthors);
@@ -65,5 +65,5 @@ page 50854 "Add New Authors"
         }
     }
     var
-    "Author Name": Text;
+    "Author Key": Text;
 }

@@ -9,7 +9,7 @@ pageextension 50851 "Role Center Open Library" extends "Role Page"
                 Caption = 'Request Books From API';
                 Image = InsertFromCheckJournal;
                 ApplicationArea = All;
-                RunObject = Page "Buy New Books";
+                RunObject = Page "Add New Books";
 
             }
             action("Get Authors")

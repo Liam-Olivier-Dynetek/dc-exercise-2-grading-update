@@ -10,7 +10,7 @@ table 50852 "Authors"
             DataClassification = ToBeClassified;
             TableRelation = "No. Series".Code;
         }
-        field(2;"Name"; Text[50])
+        field(2;"Name"; Text[100])
         {
             Caption = 'Name';
             DataClassification = ToBeClassified;

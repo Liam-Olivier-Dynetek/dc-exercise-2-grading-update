@@ -1,6 +1,38 @@
-codeunit 50851 "Open Libary Author Requests"
+codeunit 50851 "Open Library Author Requests"
 {
-    procedure GetAuthorsByName(Query: Text): Text
+    // procedure GetAuthorsByName(Query: Text): Text
+    // var
+    //     OpenLibrarySetup: Record "Open Library Setup";
+    //     AATRestHelper: Codeunit "AAT REST Helper";
+    //     ResponseText: Text;
+    //     APIErr: Label 'API Error.\Code: %1\Message: %2\Reason: %3', Comment = '%1=GetHttpStatusCode; %2=GetResponseContentAsText; %3=GetResponseReasonPhrase';
+    //     FailedRequestErr: Label 'Failed to send Request. Check URL and try again.';
+    // begin
+    //     // Initialize the request
+    //     OpenLibrarySetup.GetRecordOnce();
+    //     OpenLibrarySetup.TestField("OP-LIB No.");
+    //     AATRestHelper.LoadAPIConfig(OpenLibrarySetup."OP-LIB No.");
+    //     AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '/authors.json?q=' + Query + '&limit=5');
+
+    //     if not AATRESTHelper.Send() then begin
+    //         Commit();
+    //         if AATRESTHelper.IsTransmitIssue() then
+    //             Error(FailedRequestErr);
+
+    //         Error(
+    //             APIErr,
+    //             AATRESTHelper.GetHttpStatusCode(),
+    //             AATRESTHelper.GetResponseContentAsText(),
+    //             AATRESTHelper.GetResponseReasonPhrase()
+    //         );
+    //     end;
+
+    //     // Get the response text
+    //     ResponseText := AATRESTHelper.GetResponseContentAsText();
+    //     exit(ResponseText);
+    // end;
+
+    procedure GetAuthorsByKey(Query: Text): Text
     var
         OpenLibrarySetup: Record "Open Library Setup";
         AATRestHelper: Codeunit "AAT REST Helper";
@@ -11,8 +43,8 @@ codeunit 50851 "Open Libary Author Requests"
         // Initialize the request
         OpenLibrarySetup.GetRecordOnce();
         OpenLibrarySetup.TestField("OP-LIB No.");
-        AATRestHelper.LoadAPIConfig(OpenLibrarySetup."OP-LIB No.");
-        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '/authors.json?q=' + Query + '&limit=5');
+        AATRestHelper.LoadAPIConfig(OpenLibrarySetup."AUTH No.");
+        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '/' + Query + '.json');
 
         if not AATRESTHelper.Send() then begin
             Commit();
@@ -32,52 +64,27 @@ codeunit 50851 "Open Libary Author Requests"
         exit(ResponseText);
     end;
 
-
-    procedure ProcessJsonArray(ResponseText: Text; var TempAuthors: Record "Temp Authors")
+    procedure ProcessJson(ResponseText: Text; var TempAuthors: Record "Temp Authors")
     var
-        AATJSONHelper: Codeunit "AAT JSON Helper";
-        DocsJsonHelper: Codeunit "AAT JSON Helper";
+        JsonHelper: Codeunit "AAT JSON Helper";
         Name: Text;
-        TopSubjects: Text;
         BirthDate: Text;
-        TopWork: Text;
-        WorkCount: Integer;
         JsonToken: JsonToken;
-        JsonArr: JsonArray;
     begin
+        JsonHelper.InitializeJsonObjectFromText(ResponseText);
+        Name := JsonHelper.SelectJsonValueAsText('$.name', true);
+        BirthDate := JsonHelper.SelectJsonValueAsText('$.birth_date', false);
 
-        AATJSONHelper.InitializeJsonObjectFromText(ResponseText);
-        JsonArr := AATJSONHelper.SelectJsonToken('$.docs', true).AsArray();
-        // Check if the JsonArray is not empty
-        if JsonArr.Count() = 0 then begin
-            Message('The JsonArray is empty.');
-            exit;
-        end;
+        // Add the values to the temporary table
+        TempAuthors.Init();
+        TempAuthors.Name := CopyStr(Name, 1, MaxStrLen(TempAuthors.Name));
+        TempAuthors."Birth Date" := CopyStr(BirthDate, 1, MaxStrLen(TempAuthors."Birth Date"));
+        TempAuthors.Insert(true);
 
-        foreach JsonToken in JsonArr do begin
-            DocsJsonHelper.InitializeJsonObjectFromToken(JsonToken);
-            Name := DocsJsonHelper.SelectJsonValueAsText('$.name', true);
-            TopSubjects := GetTopSubjects(DocsJsonHelper);
-            BirthDate := DocsJsonHelper.SelectJsonValueAsText('$.birth_date', false);
-            TopWork := DocsJsonHelper.SelectJsonValueAsText('$.top_work', false);
-            WorkCount := DocsJsonHelper.SelectJsonValueAsInteger('$.work_count', false);
-
-            // Add the values to the temporary table
-            TempAuthors.Init();
-            TempAuthors.Name := CopyStr(Name, 1, MaxStrLen(TempAuthors.Name));
-            TempAuthors.Top_Subjects := CopyStr(TopSubjects, 1, MaxStrLen(TempAuthors.Top_Subjects));
-            TempAuthors."Birth Date" := CopyStr(BirthDate, 1, MaxStrLen(TempAuthors."Birth Date"));
-            TempAuthors.Top_Work := CopyStr(TopWork, 1, MaxStrLen(TempAuthors.Top_Work));
-            TempAuthors."Work Count" := WorkCount;
-            TempAuthors.Insert(true);
-
-        end;
         Message('The data has been successfully added to the temporary table.');
     end;
 
-
-
-    procedure GetTopSubjects(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
+    local procedure GetTopSubjects(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
         JsonArr: JsonArray;
         SubjectName: Text;
@@ -86,7 +93,7 @@ codeunit 50851 "Open Libary Author Requests"
         SubjectJsonValue: JsonValue;
     begin
         if not DocsJsonHelper.SelectJsonToken('$.top_subjects', false).IsArray then
-        exit;
+            exit;
         JsonArr := DocsJsonHelper.SelectJsonToken('$.top_subjects', false).AsArray();
 
 
@@ -100,7 +107,7 @@ codeunit 50851 "Open Libary Author Requests"
             SubjectName := SubjectJsonValue.AsText();
 
             if SubjectText <> '' then
-                SubjectText += '| ';
+                SubjectText += '; ';
             SubjectText += SubjectName;
         end;
         exit(SubjectText);

@@ -6,7 +6,7 @@ permissionset 50851 TemporaryLibrary
         table "Open Library Setup"=X,
         table "Temp Library"=X,
         codeunit "Open Library Book Requests"=X,
-        page "Buy New Books"=X,
+        page "Add New Books"=X,
         page "Open Library Setup"=X,
         page "Open Library Temp"=X;
 }

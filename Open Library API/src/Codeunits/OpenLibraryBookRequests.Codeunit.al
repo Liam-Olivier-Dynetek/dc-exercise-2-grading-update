@@ -14,7 +14,7 @@ codeunit 50850 "Open Library Book Requests"
         OpenLibrarySetup.GetRecordOnce();
         OpenLibrarySetup.TestField("OP-LIB No.");
         AATRestHelper.LoadAPIConfig(OpenLibrarySetup."OP-LIB No.");
-        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '.json?title=' + Query + '&fields=title,author_name,number_of_pages_median,first_publish_year,isbn,publisher&limit=10');
+        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '.json?title=' + Query + '&fields=title,author_name,number_of_pages_median,first_publish_year,isbn,publisher,author_key&limit=10');
 
         if not AATRESTHelper.Send() then begin
             Commit();
@@ -46,6 +46,7 @@ codeunit 50850 "Open Library Book Requests"
         FistPublishYear: Integer;
         ISBN: Text;
         Publisher: Text;
+        AuthorKey: Text;
     begin
 
         AATJSONHelper.InitializeJsonObjectFromText(ResponseText);
@@ -59,6 +60,7 @@ codeunit 50850 "Open Library Book Requests"
         foreach JsonToken in JsonArr do begin
             DocsJsonHelper.InitializeJsonObjectFromToken(JsonToken);
             Title := DocsJsonHelper.SelectJsonValueAsText('$.title', true);
+            AuthorKey := GetAuthorKey(DocsJsonHelper);
             AuthorName := GetAuthors(DocsJsonHelper);
             Pages := DocsJsonHelper.SelectJsonValueAsInteger('$.number_of_pages_median', false);
             FistPublishYear := DocsJsonHelper.SelectJsonValueAsInteger('$.first_publish_year', false);
@@ -69,6 +71,7 @@ codeunit 50850 "Open Library Book Requests"
             // Add the values to the temporary table
             TempOpenLibrary.Init();
             TempOpenLibrary.Title := CopyStr(Title, 1, MaxStrLen(TempOpenLibrary.Title));
+            TempOpenLibrary.Author_Key := CopyStr(AuthorKey, 1, MaxStrLen(TempOpenLibrary.Author_Key));
             TempOpenLibrary.Author := CopyStr(AuthorName, 1, MaxStrLen(TempOpenLibrary.Author));
             TempOpenLibrary.Pages := Pages;
             TempOpenLibrary.FistPublishYear := FistPublishYear;
@@ -103,7 +106,7 @@ codeunit 50850 "Open Library Book Requests"
             AuthorName := AuthorJsonValue.AsText();
 
             if AuthorsText <> '' then
-                AuthorsText += '| ';
+                AuthorsText += '; ';
             AuthorsText += AuthorName;
         end;
         exit(AuthorsText);
@@ -132,7 +135,7 @@ codeunit 50850 "Open Library Book Requests"
             PublisherNo := PublisherValue.AsText();
 
             if PublisherText <> '' then
-                PublisherText += '| ';
+                PublisherText += '; ';
             PublisherText += PublisherNo;
         end;
         exit(PublisherText);
@@ -160,9 +163,38 @@ codeunit 50850 "Open Library Book Requests"
             IsbnNo := IsbnValue.AsText();
 
             if IsBnText <> '' then
-                IsBnText += '| ';
+                IsBnText += '; ';
+            IsBnText += IsbnNo;
+        end;
+        exit(IsBnText);
+    end;
+
+    procedure GetAuthorKey(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
+    var
+        JsonArr: JsonArray;
+        IsbnNo: Text;
+        IsBnText: Text;
+        IsbnToken: JsonToken;
+        IsbnValue: JsonValue;
+    begin
+        if not DocsJsonHelper.SelectJsonToken('$.author_key', false).IsArray then
+            exit;
+        JsonArr := DocsJsonHelper.SelectJsonToken('$.author_key', false).AsArray();
+
+        if JsonArr.Count() = 0 then begin
+            Message('The JsonArray is empty.');
+            exit;
+        end;
+
+        foreach IsbnToken in JsonArr do begin
+            IsbnValue := IsbnToken.AsValue();
+            IsbnNo := IsbnValue.AsText();
+
+            if IsBnText <> '' then
+                IsBnText += '; ';
             IsBnText += IsbnNo;
         end;
         exit(IsBnText);
     end;
 }
+

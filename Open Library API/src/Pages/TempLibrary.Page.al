@@ -59,12 +59,20 @@ page 50852 "Open Library Temp"
                 ToolTip = 'Add Books From Open Library to Main Library.';
                 trigger OnAction()
                 var
+                    TempAuthors: Record "Temp Authors";
                     TransferBooks: Codeunit "Transfer Books";
+                    OpenLibraryAuthorRequests: Codeunit "Open Library Author Requests";
+                    TransferAuthors: Codeunit "Transfer Authors";
+                    ResponseText: Text;
                 begin
                     CurrPage.SetSelectionFilter(Rec);
                     if Rec.FindSet() then
                         repeat
                             TransferBooks.AddToLibrary();
+                            
+                            ResponseText := OpenLibraryAuthorRequests.GetAuthorsByKey(Rec.Author_Key);
+                            OpenLibraryAuthorRequests.ProcessJson(ResponseText, TempAuthors);
+                            TransferAuthors.AddToAuthors();
                         until Rec.Next() = 0;
                     Message('Books Added to Library.');
                 end;

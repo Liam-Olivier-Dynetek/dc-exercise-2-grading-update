@@ -37,7 +37,10 @@ table 50851 "Temp Library"
         {
             DataClassification = ToBeClassified;
         }
-        
+        field(7; "Author_Key"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys

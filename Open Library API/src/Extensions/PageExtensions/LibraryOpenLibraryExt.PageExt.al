@@ -29,7 +29,7 @@ pageextension 50850 "Library Open Library Ext" extends "Library List"
 
                 trigger OnAction()
                 var
-                    BuyNewBooks: Page "Buy New Books";
+                    BuyNewBooks: Page "Add New Books";
                 begin
                     BuyNewBooks.RunModal();
                 end;

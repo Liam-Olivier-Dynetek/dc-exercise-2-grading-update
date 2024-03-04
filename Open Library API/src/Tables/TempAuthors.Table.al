@@ -9,7 +9,7 @@ table 50853 "Temp Authors"
             Caption = 'Temp Author No.';
             DataClassification = ToBeClassified;
         }
-        field(2;"Name"; Text[50])
+        field(2;"Name"; Text[100])
         {
             Caption = 'Name';
             DataClassification = ToBeClassified;

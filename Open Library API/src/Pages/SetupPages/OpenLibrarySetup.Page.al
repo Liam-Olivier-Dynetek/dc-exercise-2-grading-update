@@ -15,6 +15,11 @@ page 50851 "Open Library Setup"
         {
             group(General)
             {
+                field("AUTH No."; Rec."AUTH No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the AUTH No. field.';
+                }
                 field("OP-LIB No."; Rec."OP-LIB No.")
                 {
                     ApplicationArea = All;
@@ -25,6 +30,7 @@ page 50851 "Open Library Setup"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Author No. field.';
                 }
+                
             }
         }
     }

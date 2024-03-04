@@ -1,4 +1,4 @@
-page 50850 "Buy New Books"
+page 50850 "Add New Books"
 {
     Caption = 'Buy New Books';
     PageType = Card;
@@ -18,19 +18,6 @@ page 50850 "Buy New Books"
                     Editable = true;
                 }
 
-                field("Author Name"; "Author Name")
-                {
-                    ToolTip = 'Specifies the value of the Author Name field.';
-                    Caption = 'Author Name';
-                    Editable = false;
-                }
-
-                field("First Published Year"; "First Published Year")
-                {
-                    ToolTip = 'Specifies the value of the First Published Year field.';
-                    Caption = 'First Published Year';
-                    Editable = false;
-                }
             }
             group(Results)
             {
@@ -64,7 +51,7 @@ page 50850 "Buy New Books"
                 begin
                     ResponseText := OpenLibraryBookRequests.GetBooksByTitle(Title);
                     OpenLibraryBookRequests.ProcessJsonArray(ResponseText, TempOpenLibrary);
-
+                    
                     if TempOpenLibrary.FindFirst() then begin
                         PAGE.RUN(PAGE::"Open Library Temp", TempOpenLibrary);
                         
