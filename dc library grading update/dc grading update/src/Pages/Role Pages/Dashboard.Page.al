@@ -88,10 +88,10 @@ page 50760 "Dash Board"
         }
     }
 
-    // trigger OnOpenPage()
-    // begin
-    //     Rec.CheckFiltersEmpty();
-    // end;
+    trigger OnOpenPage()
+    begin
+        Rec.UpdateCounts();
+    end;
 
 
     var
