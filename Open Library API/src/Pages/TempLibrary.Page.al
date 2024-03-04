@@ -2,7 +2,7 @@ page 50852 "Open Library Temp"
 {
     PageType = List;
     SourceTable = "Temp Library";
-    UsageCategory = Administration;
+    UsageCategory = None;
     ApplicationArea = All;
     SourceTableTemporary = true;
 

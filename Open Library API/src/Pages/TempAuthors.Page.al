@@ -2,7 +2,7 @@ page 50855 "Temp Authors"
 {
     PageType = List;
     SourceTable = "Temp Authors";
-    UsageCategory = Administration;
+    UsageCategory = None;
     ApplicationArea = All;
     SourceTableTemporary = true;
 
