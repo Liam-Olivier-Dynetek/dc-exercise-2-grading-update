@@ -1,7 +1,7 @@
 table 50851 "Temp Library"
 {
     DataClassification = ToBeClassified;
-    
+
     fields
     {
         field(10; "Temp id"; Code[20])
@@ -13,6 +13,11 @@ table 50851 "Temp Library"
         {
             DataClassification = ToBeClassified;
         }
+        field(30; "Cover Image"; Media)
+        {
+            DataClassification = ToBeClassified;
+        }
+
         field(1; "Title"; Text[50])
         {
             DataClassification = ToBeClassified;
@@ -41,6 +46,17 @@ table 50851 "Temp Library"
         {
             DataClassification = ToBeClassified;
         }
+        field(8; "CoverKey"; Text[50])
+        {
+            DataClassification = ToBeClassified;
+        }
+        // field(9; "Blob Image"; Blob)
+        // {
+        //     Caption = 'Blob Image';
+        //     DataClassification = ToBeClassified;
+        // }
+
+        
     }
 
     keys
@@ -63,6 +79,6 @@ table 50851 "Temp Library"
     begin
         LibrarySetup.GetRecordOnce();
         LibrarySetup.TestField("Temporary Book Nos.");
-        Rec."Temp id" := NoSeriesMgt.GetNextNo(LibrarySetup."Temporary Book Nos.",WorkDate(), true);
+        Rec."Temp id" := NoSeriesMgt.GetNextNo(LibrarySetup."Temporary Book Nos.", WorkDate(), true);
     end;
 }

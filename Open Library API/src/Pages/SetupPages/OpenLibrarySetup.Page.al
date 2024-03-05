@@ -30,6 +30,11 @@ page 50851 "Open Library Setup"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Author No. field.';
                 }
+                field("Cover No."; Rec."Cover No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Cover No. field.';
+                }
                 
             }
         }

@@ -14,7 +14,7 @@ codeunit 50850 "Open Library Book Requests"
         OpenLibrarySetup.GetRecordOnce();
         OpenLibrarySetup.TestField("OP-LIB No.");
         AATRestHelper.LoadAPIConfig(OpenLibrarySetup."OP-LIB No.");
-        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '.json?title=' + Query + '&fields=title,author_name,number_of_pages_median,first_publish_year,isbn,publisher,author_key&limit=10');
+        AATRestHelper.Initialize('GET', AATRestHelper.GetAPIConfigBaseEndpoint() + '.json?title=' + Query + '&fields=title,author_name,number_of_pages_median,first_publish_year,isbn,publisher,author_key,cover_edition_key&limit=5');
 
         if not AATRESTHelper.Send() then begin
             Commit();
@@ -38,6 +38,7 @@ codeunit 50850 "Open Library Book Requests"
     var
         AATJSONHelper: Codeunit "AAT JSON Helper";
         DocsJsonHelper: Codeunit "AAT JSON Helper";
+        OpenLibraryImageRequests: Codeunit "Open Library Image Requests";
         Title: Text;
         AuthorName: Text;
         Pages: Integer;
@@ -47,6 +48,9 @@ codeunit 50850 "Open Library Book Requests"
         ISBN: Text;
         Publisher: Text;
         AuthorKey: Text;
+        CoverKey: Text;
+        CoverImage: InStream;
+        ResponseInStream: InStream;
     begin
 
         AATJSONHelper.InitializeJsonObjectFromText(ResponseText);
@@ -60,6 +64,11 @@ codeunit 50850 "Open Library Book Requests"
         foreach JsonToken in JsonArr do begin
             DocsJsonHelper.InitializeJsonObjectFromToken(JsonToken);
             Title := DocsJsonHelper.SelectJsonValueAsText('$.title', true);
+            CoverKey := DocsJsonHelper.SelectJsonValueAsText('$.cover_edition_key', false);
+            ResponseInStream := OpenLibraryImageRequests.GetBookCovers(CoverKey);
+
+            ProcessBlob(CoverImage, ResponseInStream);
+
             AuthorKey := GetAuthorKey(DocsJsonHelper);
             AuthorName := GetAuthors(DocsJsonHelper);
             Pages := DocsJsonHelper.SelectJsonValueAsInteger('$.number_of_pages_median', false);
@@ -67,10 +76,13 @@ codeunit 50850 "Open Library Book Requests"
             ISBN := GetISBN(DocsJsonHelper);
             Publisher := GetAuthors(DocsJsonHelper);
 
-
             // Add the values to the temporary table
             TempOpenLibrary.Init();
             TempOpenLibrary.Title := CopyStr(Title, 1, MaxStrLen(TempOpenLibrary.Title));
+            TempOpenLibrary.CoverKey := CopyStr(CoverKey, 1, MaxStrLen(TempOpenLibrary.CoverKey));
+
+            TempOpenLibrary."Cover Image".ImportStream(CoverImage, 'Cover Image');
+
             TempOpenLibrary.Author_Key := CopyStr(AuthorKey, 1, MaxStrLen(TempOpenLibrary.Author_Key));
             TempOpenLibrary.Author := CopyStr(AuthorName, 1, MaxStrLen(TempOpenLibrary.Author));
             TempOpenLibrary.Pages := Pages;
@@ -78,10 +90,21 @@ codeunit 50850 "Open Library Book Requests"
             TempOpenLibrary.isbn := CopyStr(ISBN, 1, MaxStrLen(TempOpenLibrary.isbn));
             TempOpenLibrary.Publisher := CopyStr(Publisher, 1, MaxStrLen(TempOpenLibrary.Publisher));
             TempOpenLibrary.Insert(true);
-
         end;
         Message('The data has been successfully added to the temporary table.');
     end;
+
+
+    local procedure ProcessBlob(var CoverImage: InStream; var ResponseInStream: InStream)
+    var
+        TempBlob: Codeunit "Temp Blob";
+        BlobOutStream: OutStream;
+    begin
+        TempBlob.CreateOutStream(BlobOutStream);
+        CopyStream(BlobOutStream, ResponseInStream);
+        TempBlob.CreateInStream(CoverImage);
+    end;
+
 
     procedure GetAuthors(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
@@ -196,5 +219,9 @@ codeunit 50850 "Open Library Book Requests"
         end;
         exit(IsBnText);
     end;
+
+
+
+
 }
 

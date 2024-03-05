@@ -2,8 +2,13 @@ pageextension 50850 "Library Open Library Ext" extends "Library List"
 {
     layout
     {
-        addafter("Due Date")
+        addafter(Title)
         {
+            field("Cover Image"; Rec."Cover Image")
+            {
+                ApplicationArea = All;
+                ToolTip = 'Specifies the value of the Cover Image field.';
+            }
 
             field(FirstPublishYear; Rec.FirstPublishYear)
             {
@@ -11,7 +16,6 @@ pageextension 50850 "Library Open Library Ext" extends "Library List"
                 ToolTip = 'Specifies the value of the FirstPublishYear field.';
                 Caption = 'First Year Published';
             }
-            
         }
     }
     actions

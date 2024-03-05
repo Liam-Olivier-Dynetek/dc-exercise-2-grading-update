@@ -17,9 +17,15 @@ page 50852 "Open Library Temp"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Temp id field.';
                 }
+
                 field("Title"; Rec.Title)
                 {
                     ApplicationArea = All;
+                }
+                field("Cover Image"; Rec."Cover Image")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the value of the Cover Image field.';
                 }
                 field("Author"; Rec.Author)
                 {
@@ -62,14 +68,21 @@ page 50852 "Open Library Temp"
                     TempAuthors: Record "Temp Authors";
                     TransferBooks: Codeunit "Transfer Books";
                     OpenLibraryAuthorRequests: Codeunit "Open Library Author Requests";
+                    // OpenLibraryImageRequests: Codeunit "Open Library Image Requests";
                     TransferAuthors: Codeunit "Transfer Authors";
                     ResponseText: Text;
+                    // CoverKey: Text;
+                    // CoverImage: InStream;
                 begin
                     CurrPage.SetSelectionFilter(Rec);
                     if Rec.FindSet() then
                         repeat
+                            //Add Book Covers to books.
+                            // CoverKey := Rec.CoverKey;
+                            // CoverImage := OpenLibraryImageRequests.GetBookCovers(CoverKey);
+                            //Add Books To Library
                             TransferBooks.AddToLibrary();
-                            
+                            //Add Authors To Author List
                             ResponseText := OpenLibraryAuthorRequests.GetAuthorsByKey(Rec.Author_Key);
                             OpenLibraryAuthorRequests.ProcessJson(ResponseText, TempAuthors);
                             TransferAuthors.AddToAuthors();

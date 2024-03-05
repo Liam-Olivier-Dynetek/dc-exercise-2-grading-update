@@ -20,6 +20,10 @@ table 50850 "Open Library Setup"
         {
             TableRelation = "AAT API"."No.";
         }
+        field(50865; "Cover No."; Code[20])
+        {
+            TableRelation = "AAT API"."No.";
+        }
     }
 
     keys
