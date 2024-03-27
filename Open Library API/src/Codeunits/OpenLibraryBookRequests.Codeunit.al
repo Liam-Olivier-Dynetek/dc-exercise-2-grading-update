@@ -135,7 +135,6 @@ codeunit 50850 "Open Library Book Requests"
         exit(AuthorsText);
     end;
 
-    //TODO add ISBN, publisher,
     procedure GetPublisher(var DocsJsonHelper: Codeunit "AAT JSON Helper"): Text
     var
         PublisherArr: JsonArray;
